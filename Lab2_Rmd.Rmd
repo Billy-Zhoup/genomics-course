@@ -1,0 +1,15 @@
+---
+title: "Evolutionary Genomics & Bioinformatics"
+author: "Jeffrey Blanchard"
+date: "2/26/2020"
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
+
+# REFERENCES
