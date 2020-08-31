@@ -1,7 +1,5 @@
 ---
-title: "Evolutionary Genomics & Bioinformatics"
-author: "Billy Zhou"
-date: "2/26/2020"
+title: " "
 output: html_document
 bibliography: references.bib
 ---
@@ -10,6 +8,10 @@ bibliography: references.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ![](image/Image_2.jpg)
+
+# Evolutionary Genomics & Bioinformatics
+Author: "Billy (Peng) Zhou"
+
 
 [Lab1](Lab_1.html)
 
