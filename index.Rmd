@@ -9,6 +9,7 @@ bibliography: references.bib
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+![](image/Image_2.jpg)
 
 [Lab1](Lab_1.html)
 
