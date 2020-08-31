@@ -1,6 +1,7 @@
 ---
 title: "index"
 output: html_document
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -8,3 +9,5 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 [Lab1](Lab_1.html)
+
+Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
