@@ -1,6 +1,6 @@
 ---
 title: "Evolutionary Genomics & Bioinformatics"
-author: "Jeffrey Blanchard"
+author: "Billy Zhou"
 date: "2/26/2020"
 output: html_document
 bibliography: references.bib
