@@ -1,7 +1,5 @@
 ---
-title: "Evolutionary Genomics & Bioinformatics"
-author: "Jeffrey Blanchard"
-date: "2/26/2020"
+title: "Lab2"
 output: html_document
 bibliography: references.bib
 ---
