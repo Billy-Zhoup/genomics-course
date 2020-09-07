@@ -17,6 +17,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab2](Lab2_Rmd.html)
 
+[Lab3A](Lab3A.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
