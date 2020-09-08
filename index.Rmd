@@ -19,6 +19,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab3A](Lab3A.html)
 
+[Lab3B](Lab3B.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
