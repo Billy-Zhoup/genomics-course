@@ -13,15 +13,15 @@ knitr::opts_chunk$set(echo = TRUE)
 Author: "Billy (Peng) Zhou"
 
 
-[Lab1](Lab_1.html)
+[Lab1:Introduction to R and Reproducible ResearchFile](Lab_1.html)
 
-[Lab2](Lab2_Rmd.html)
+[Lab2:git, GitHub and Rstudio projectsFile](Lab2_Rmd.html)
 
-[Lab3A](Lab3A.html)
+[Lab3A:Data Wrangling:Starting with data](Lab3A.html)
 
-[Lab3B](Lab3B.html)
+[Lab3B Data Wrangling:Manipulating, analyzing and exporting data with tidyverse](Lab3B.html)
 
-[Lab4](Lab4.html) Data wrangling and graphing COVID-19 reporting data (Part 1)
+[Lab4 Data wrangling and graphing COVID-19 reporting data (Part 1)](Lab4.html) 
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
