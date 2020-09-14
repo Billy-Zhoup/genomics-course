@@ -1,0 +1,237 @@
+---
+title: "Lab 4 : Data wrangling and graphing COVID-19 reporting data (Part 1)"
+output: html_document
+---
+## Exercises (Part 1)
+Today’s exercises involve the application of what you learned in the Data Carpentries tutorial to a new data set. This step in applying your skills is often hard at first. Take your time and reread the tutorials, then try some options.
+
+Use the DT package for showing the data tables where appropriate.
+
+Load packages
+```{r}
+library(tidyverse)
+library(DT)
+```
+
+#### 1. The format of the daily reports has changed over time. What are the differences between 3/13/2020, the Friday before spring break 2020 and yesterday 6 months later on 9/13/2020? Load the files into R and use str() and View() (or in the top right corner click on Environment and then the data frame.). Note the in the more recent dates they have changed the column headers so that it is no longer necessary to rename Province_State and Country_Region.
+
+```{r}
+#Load Data of 3/13/2020 & 9/13/2020
+
+report_03_13_2020 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-11-2020.csv")) %>%
+  rename(Country_Region = "Country/Region", Province_State = "Province/State")
+
+report_09_13_2020 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-13-2020.csv"))
+
+```
+
+```{r}
+# str()
+str(report_03_13_2020)
+str(report_09_13_2020)
+
+```
+```{r}
+view(report_03_13_2020)
+```
+```{r}
+view(report_09_13_2020)
+```
+
+
+#### 2. Many countries have multiple entries representing different regions (e.g. counties and states). To get the counts for a country we need to summarise the data. Use group_by() and summarize() to make a data frame (tibble) with total counts for each country.
+
+```{r}
+report_03_13_2020_Total <- report_03_13_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered))
+
+report_09_13_2020_Total <- report_09_13_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered))
+datatable(report_03_13_2020_Total)
+datatable(report_09_13_2020_Total)
+```
+
+#### 3. To get counts for confirmed cases per U.S state use filter() to select US and group_by and summarize as above.
+
+```{r}
+report_03_13_2020_US <- report_03_13_2020 %>% 
+  filter(Country_Region == "US") %>% 
+  group_by(Province_State) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered))
+
+report_09_13_2020_US <- report_09_13_2020 %>% 
+  filter(Country_Region == "US") %>% 
+  filter(Province_State != "Recovered") %>% 
+  group_by(Province_State) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered))
+
+datatable(report_03_13_2020_US)
+datatable(report_09_13_2020_US)
+```
+
+#### 4. It will be difficult to make simple graphs with the data from all countries in the world or even the US states. Use arrange_by() and slice() to get just the top 10 countries for Deaths.
+
+```{r}
+report_03_13_2020_top10_Deaths <- report_03_13_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered)) %>% 
+  arrange(desc(Deaths_total_counts)) %>% 
+  slice(1:10)
+
+report_09_13_2020_top10_Deaths <- report_09_13_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered)) %>% 
+  arrange(desc(Deaths_total_counts)) %>% 
+  slice(1:10)
+datatable(report_03_13_2020_top10_Deaths)
+datatable(report_09_13_2020_top10_Deaths)
+```
+# Introduction to R Graphics
+
+https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html
+
+Load the package
+
+```{r}
+#install.packages("tidyverse")
+library(tidyverse)
+```
+## Exercises (Part 2)
+
+#### 4. Make plots using geom_point() of the 10 countries with the confirmed cases and deaths (two separate graphs) on 3/12/2020 and 9/12/2020.
+
+How to reorder ggplot
+https://sebastiansauer.github.io/ordering-bars/
+
+```{r}
+# Subset for top 10 confirmed cases
+report_03_13_2020_top10_Confirmed <- report_03_13_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered)) %>% 
+  arrange(desc(Confirmed_total_counts)) %>% 
+  slice(1:10)
+
+report_09_13_2020_top10_Confirmed <- report_09_13_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered)) %>% 
+  arrange(desc(Confirmed_total_counts)) %>% 
+  slice(1:10)
+datatable(report_03_13_2020_top10_Confirmed)
+datatable(report_09_13_2020_top10_Confirmed)
+```
+```{r}
+# Total Death top 10
+ggplot(data = report_03_13_2020_top10_Deaths, aes(x = reorder(Country_Region,-Deaths_total_counts), y = Deaths_total_counts)) +
+  geom_point()
+ggplot(data = report_09_13_2020_top10_Deaths, aes(x = reorder(Country_Region,-Deaths_total_counts), y = Deaths_total_counts)) +
+  geom_point()
+# Total confirmed cases top 10
+ggplot(data = report_03_13_2020_top10_Confirmed, aes(x = reorder(Country_Region,-Confirmed_total_counts), y = Confirmed_total_counts)) +
+  geom_point()
+ggplot(data = report_09_13_2020_top10_Confirmed, aes(x = reorder(Country_Region,-Confirmed_total_counts), y = Confirmed_total_counts)) +
+  geom_point()
+```
+
+#### 5. Make using geom_bar of the 10 states with the most confirmed cases and deaths (two separate graphs) on 3/12/2020 and 9/12/2020
+
+http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization
+
+```{r}
+# create subset 
+report_03_13_2020_top10_States_Confirmed <- report_03_13_2020 %>% 
+  filter(Country_Region == "US") %>%
+  group_by(Province_State) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered)) %>% 
+  arrange(desc(Confirmed_total_counts)) %>% 
+  slice(1:10)
+
+report_09_13_2020_top10_States_Confirmed <- report_09_13_2020 %>% 
+  filter(Country_Region == "US") %>%
+  group_by(Province_State) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered)) %>% 
+  arrange(desc(Confirmed_total_counts)) %>% 
+  slice(1:10)
+
+report_03_13_2020_top10_States_Deaths <- report_03_13_2020 %>% 
+  filter(Country_Region == "US") %>%
+  group_by(Province_State) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered)) %>% 
+  arrange(desc(Deaths_total_counts)) %>% 
+  slice(1:10)
+
+report_09_13_2020_top10_States_Deaths <- report_09_13_2020 %>% 
+  filter(Country_Region == "US") %>%
+  group_by(Province_State) %>% 
+  summarize(Confirmed_total_counts = sum(Confirmed), 
+            Deaths_total_counts = sum(Deaths),
+            Recovered_total_counts = sum(Recovered)) %>% 
+  arrange(desc(Deaths_total_counts)) %>% 
+  slice(1:10)
+
+datatable(report_03_13_2020_top10_States_Confirmed)
+datatable(report_09_13_2020_top10_States_Confirmed)
+
+datatable(report_03_13_2020_top10_States_Deaths)
+datatable(report_09_13_2020_top10_States_Deaths)
+```
+
+
+Label Wrapping:
+https://stackoverflow.com/questions/21878974/auto-wrapping-of-labels-via-labeller-label-wrap-in-ggplot2
+```{r}
+library(stringr)
+```
+
+```{r}
+# Total Confirmed top 10 States
+ggplot(data = report_03_13_2020_top10_States_Confirmed, aes(x = reorder(Province_State,-Confirmed_total_counts), y = Confirmed_total_counts)) +
+  geom_bar(stat="identity", fill="steelblue")+
+  geom_text(aes(label = Confirmed_total_counts), vjust=-0.3, size=3.5)+
+  theme_minimal()+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+
+ggplot(data = report_09_13_2020_top10_States_Confirmed, aes(x = reorder(Province_State,-Confirmed_total_counts), y = Confirmed_total_counts)) +
+  geom_bar(stat="identity", fill="steelblue")+
+  geom_text(aes(label = Confirmed_total_counts), vjust=-0.3, size=3.5)+
+  theme_minimal()+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+
+# Total Death top 10 States
+
+ggplot(data = report_03_13_2020_top10_States_Deaths, aes(x = reorder(Province_State,-Deaths_total_counts), y = Deaths_total_counts)) +
+  geom_bar(stat="identity", fill="steelblue")+
+  geom_text(aes(label = Deaths_total_counts), vjust=-0.3, size=3.5)+
+  theme_minimal()+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+
+ggplot(data = report_09_13_2020_top10_States_Deaths, aes(x = reorder(Province_State,-Deaths_total_counts), y = Deaths_total_counts)) +
+  geom_bar(stat="identity", fill="steelblue")+
+  geom_text(aes(label = Deaths_total_counts), vjust=-0.3, size=3.5)+
+  theme_minimal()+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10))
+```
+

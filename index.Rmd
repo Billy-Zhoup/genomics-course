@@ -21,6 +21,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab3B](Lab3B.html)
 
+[Lab4](Lab4.html) Data wrangling and graphing COVID-19 reporting data (Part 1)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
