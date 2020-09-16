@@ -23,6 +23,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab4 Data wrangling and graphing COVID-19 reporting data (Part 1)](Lab4.html) 
 
+[Lab4A Data visualization with ggplot2 (Part 1)](Lab4a.html) 
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
