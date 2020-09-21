@@ -25,6 +25,10 @@ Author: "Billy (Peng) Zhou"
 
 [Lab4A Data visualization with ggplot2 (Part 1)](Lab4a.html) 
 
+[Lab5 Data wrangling and graphing COVID-19 reporting data (Part 2)](Lab5.html) 
+
+[Lab5A Data visualization with ggplot2 (Part 2)](Lab5a.html) 
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
