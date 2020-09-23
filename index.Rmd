@@ -29,6 +29,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab5A Data visualization with ggplot2 (Part 2)](Lab5a.html) 
 
+[Lab5 extra: Interactive Graphs and Animations from the COVID-19 reporting data](Lab5extra.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
