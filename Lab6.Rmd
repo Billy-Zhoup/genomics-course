@@ -214,21 +214,64 @@ ggplotly(
 )
 ```
 
+Here is an example with the world map
+```{r}
+# Read in the daily report
+daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  group_by(Country_Region) %>% 
+  summarize(Confirmed = sum(Confirmed), Deaths = sum(Deaths))
+
+# Read in the world map data
+world <- as_tibble(map_data("world"))
+
+# Check to see if there are differences in the naming of countries
+setdiff(world$region, daily_report$Country_Region) 
+```
+```{r}
+# Many of these countries are considered states or territories in the JHU covid reports,
+# but let's fix a few of them
+
+world <- as_tibble(map_data("world")) %>% 
+ mutate(region = str_replace_all(region, c("USA" = "US", "Czech Republic" = "Czechia",  
+        "Ivory Coast" = "Cote d'Ivoire", "Democratic Republic of the Congo" = "Congo (Kinshasa)", 
+        "Republic of Congo" = "Congo (Brazzaville)")))
+
+# Join the covid report with the map data
+country_join <- left_join(world, daily_report, by = c("region" = "Country_Region"))
+
+# Create the graph
+ggplotly(
+ggplot(data = world, mapping = aes(x = long, y = lat, text = region, group = group)) + 
+  coord_fixed(1.3) + 
+# Add data layer
+  geom_polygon(data = country_join, aes(fill = Deaths), color = "black") +
+  scale_fill_gradientn(colours = 
+                         wes_palette("Zissou1", 100, type = "continuous")) +
+  labs(title = "COVID-19 Deaths'")
+)
+```
+
 ## Exercises
 
-1. For the above graph “World COVID-19 Confirmed case” summarize the counts for each Country on the graph and update the graph to 9/26/2020. You may need to adjust the size of the points.
+For the above graph “COVID-19 Deaths” summarize the counts for each Country on the graph and update the graph to 9/26/2020. You are doing some real life data wrangling. Data is not always in the form that you expected, so it is important to check what the results of each step are. You can summarize the counts for each country and find the median Lat and Long as a way of summarize the Lat and Long from each state. However, the US and several other countries do not have counts. This is because for some US (and other countries) the Lat and Long are NA. One strategies is to simply remove this data (which is fine for this class).
+Using the mean or median(Lat) and (Long) is still not perfect. Some countries are still centered in the ocean. This is ok for ex1. You can use ggplotly to help trouble shoot by putting the Country_Region as text in the hover box
+
+ggplotly(ggplot(daily_report, aes(x = Long, y = Lat, text = Country_Region, size = Confirmed))...) 
+
+
 ```{r}
 
 daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
   rename(Long = "Long_") 
 
-ggplot(daily_report, aes(x = Long, y = Lat, size = Confirmed/1000)) +
+ggplot(daily_report, aes(x = Long, y = Lat, size = Deaths/1000)) +
 
     borders("world", colour = NA, fill = "grey90") +
     theme_bw() +
     geom_point(shape = 21, color='purple', fill='purple', alpha = 0.5) +
-    labs(title = 'World COVID-19 Confirmed cases 09262020',x = '', y = '',
-     size="Cases (x1000))") +
+    labs(title = 'World COVID-19 Deaths cases 09262020',x = '', y = '',
+     size="Deaths (x1000))") +
     theme(legend.position = "right") +
     coord_fixed(ratio=1.5)+
     scale_size_continuous(range = c(0.1, 2))
@@ -236,10 +279,30 @@ ggplot(daily_report, aes(x = Long, y = Lat, size = Confirmed/1000)) +
 
 
 ```{r}
+
+daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>%
+  drop_na(Lat, Long) %>% 
+  group_by(Country_Region) %>% 
+  summarize(Deaths = sum(Deaths), Latitude = mean(Lat), Longtitude = mean(Long))
+
+ggplotly(ggplot(daily_report, aes(x = Longtitude, y = Latitude,text = Country_Region, size = Deaths/1000)) +
+
+    borders("world", colour = NA, fill = "grey90") +
+    theme_bw() +
+    geom_point(shape = 21, color='purple', fill='purple', alpha = 0.5) +
+    labs(title = 'World COVID-19 Deaths cases 09262020',x = '', y = '',
+     size="Deaths (x1000))") +
+    theme(legend.position = "right") +
+    coord_fixed(ratio=1.5)+
+    scale_size_continuous(range = c(1, 10)))
+```
+
+```{r}
 daily_report_0926 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
   group_by(Country_Region) %>% 
-  summarize(Confirmed = sum(Confirmed))
+  summarize(Deaths = sum(Deaths))
 daily_report_0926$Country_Region[which(daily_report_0926$Country_Region=="US")] <-"USA"
 
 # load the global map data
@@ -251,12 +314,12 @@ country_join <- left_join(global, daily_report_0926, by = c("region" = "Country_
 ggplot(data = global, mapping = aes(x = long, y = lat, group = group)) + 
   coord_fixed(1.3) + 
 # Add data layer
-  geom_polygon(data = country_join, aes(fill = Confirmed), color = NA) +
+  geom_polygon(data = country_join, aes(fill = Deaths), color = NA) +
   
   scale_fill_gradientn(colours = 
                          wes_palette("Zissou1", 100, type = "continuous"),
                          trans = "log10") +
-  labs(title = "COVID-19 Confirmed Cases in the Global 09262020'")
+  labs(title = "COVID-19 Deaths Cases in the Global 09262020'")
 ```
 
 

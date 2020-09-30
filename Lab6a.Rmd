@@ -19,13 +19,13 @@ daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/C
 ```
 
 ```{r, echo=FALSE, warning = FALSE}
-ggplot(daily_report, aes(x = Long, y = Lat, size = Confirmed/1000)) +
+ggplot(daily_report, aes(x = Long, y = Lat, size = Deaths/1000)) +
 
     borders("world", colour = NA, fill = "grey90") +
     theme_bw() +
     geom_point(shape = 21, color='purple', fill='purple', alpha = 0.5) +
-    labs(title = 'World COVID-19 Confirmed cases 09262020',x = '', y = '',
-     size="Cases (x1000))") +
+    labs(title = 'World COVID-19 Deaths cases 09262020',x = '', y = '',
+     size="Deaths (x1000))") +
     theme(legend.position = "right") +
     coord_fixed(ratio=1.5)+
     scale_size_continuous(range = c(0.1, 2))
@@ -37,7 +37,7 @@ We can also show it in country level
 daily_report_0926 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
   group_by(Country_Region) %>% 
-  summarize(Confirmed = sum(Confirmed))
+  summarize(Deaths = sum(Deaths))
 daily_report_0926$Country_Region[which(daily_report_0926$Country_Region=="US")] <-"USA"
 
 # load the global map data
@@ -51,12 +51,35 @@ country_join <- left_join(global, daily_report_0926, by = c("region" = "Country_
 ggplot(data = global, mapping = aes(x = long, y = lat, group = group)) + 
   coord_fixed(1.3) + 
 # Add data layer
-  geom_polygon(data = country_join, aes(fill = Confirmed), color = NA) +
+  geom_polygon(data = country_join, aes(fill = Deaths), color = NA) +
   
   scale_fill_gradientn(colours = 
                          wes_palette("Zissou1", 100, type = "continuous"),
                          trans = "log10") +
-  labs(title = "COVID-19 Confirmed Cases in the Global 09262020'")
+  labs(title = "COVID-19 Deaths Cases in the Global 09262020'")
+```
+
+Or
+
+```{r,include = FALSE}
+daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>%
+  drop_na(Lat, Long) %>% 
+  group_by(Country_Region) %>% 
+  summarize(Deaths = sum(Deaths), Latitude = mean(Lat), Longtitude = mean(Long))
+```
+
+```{r, echo=FALSE, warning = FALSE}
+ggplot(daily_report, aes(x = Longtitude, y = Latitude,text = Country_Region, size = Deaths/1000)) +
+
+    borders("world", colour = NA, fill = "grey90") +
+    theme_bw() +
+    geom_point(shape = 21, color='purple', fill='purple', alpha = 0.5) +
+    labs(title = 'World COVID-19 Deaths cases 09262020',x = '', y = '',
+     size="Deaths (x1000))") +
+    theme(legend.position = "right") +
+    coord_fixed(ratio=1.5)+
+    scale_size_continuous(range = c(1, 10))
 ```
 
 Anisa Dhana made some good format for this kind of graph

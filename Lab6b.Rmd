@@ -1,0 +1,14 @@
+---
+title: "Lab 6x : R Shiny apps using the COVID-19 reporting data"
+output: html_document
+---
+
+https://moodle.umass.edu/pluginfile.php/3460973/mod_resource/content/6/EvoGenoLab6x_Shiny.html
+
+https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/
+
+
+## Homework Display:
+
+[Lab 6x display example](ShinyApps/Covid0926/app.R)
+
