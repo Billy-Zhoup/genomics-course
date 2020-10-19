@@ -37,6 +37,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab6b R Shiny apps](Lab6b.html)
 
+[Lab7 RNA-Seq workflow: gene-level exploratory analysis and differential expression](Lab7.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
