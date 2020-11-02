@@ -1412,12 +1412,12 @@ library(tidyverse)</code></pre>
 <p>The simplest patterns match exact strings:</p>
 <pre class="r"><code>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;)
 str_view(x, &quot;an&quot;)</code></pre>
-<div id="htmlwidget-c859046967dc827c4ead" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c859046967dc827c4ead">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-57f1411e73cd24855f2f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-57f1411e73cd24855f2f">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>The next step up in complexity is ., which matches any character (except a newline):</p>
 <pre class="r"><code>str_view(x, &quot;.a.&quot;)</code></pre>
-<div id="htmlwidget-c0d687625cec9dd92542" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c0d687625cec9dd92542">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-858db8ff02dd2ad5206f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-858db8ff02dd2ad5206f">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Note that this only shows the first match in a string.</p>
 <p>But if “.” matches any character, how do you match the character “.”? You need to use an “escape” to tell the regular expression you want to match it exactly, not use its special behaviour. Like strings, regexps use the backslash, , to escape special behaviour. So to match an ., you need the regexp .. Unfortunately this creates a problem. We use strings to represent regular expressions, and  is also used as an escape symbol in strings. So to create the regular expression . we need the string “\.”.</p>
 <pre class="r"><code># To create the regular expression, we need \\
@@ -1430,15 +1430,15 @@ writeLines(dot)</code></pre>
 <pre class="r"><code># And this tells R to look for an explicit .
 x &lt;- c(&quot;abc&quot;, &quot;a.c&quot;, &quot;bef&quot;)
 str_view(x, &quot;a\\.c&quot;)</code></pre>
-<div id="htmlwidget-7033f994bba03fa061f5" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7033f994bba03fa061f5">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fe407f537e1e7c802a82" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fe407f537e1e7c802a82">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>If used as an escape character in regular expressions, how do you match a literal ? Well you need to escape it, creating the regular expression \. To create that regular expression, you need to use a string, which also needs to escape . That means to match a literal  you need to write “\\” — you need four backslashes to match one!</p>
 <pre class="r"><code>x &lt;- &quot;a\\b&quot;
 writeLines(x)</code></pre>
 <pre><code>## a\b</code></pre>
 <pre class="r"><code>str_view(x, &quot;\\\\&quot;)</code></pre>
-<div id="htmlwidget-6df5d4bb25f21dfb924e" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6df5d4bb25f21dfb924e">{"x":{"html":"<ul>\n  <li>a<span class='match'>\\<\/span>b<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-56d1b3204a75d9f3590d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-56d1b3204a75d9f3590d">{"x":{"html":"<ul>\n  <li>a<span class='match'>\\<\/span>b<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>In this book, I’ll write regular expression as . and strings that represent the regular expression as “\.”.</p>
 <div id="exercises" class="section level4">
 <h4>14.3.1.1 Exercises</h4>
@@ -1448,8 +1448,8 @@ writeLines(x)</code></pre>
 </ol>
 <pre class="r"><code>E12 &lt;- c(&quot;abc&quot;, &quot;a.&#39;\\c&quot;, &quot;bef&quot;)</code></pre>
 <pre class="r"><code>str_view(E12, &quot;&#39;\\\\&quot;)</code></pre>
-<div id="htmlwidget-925298f85558f71a03e4" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-925298f85558f71a03e4">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a.<span class='match'>'\\<\/span>c<\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f23fe87f2bdac42a6c40" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f23fe87f2bdac42a6c40">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a.<span class='match'>'\\<\/span>c<\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ol start="3" style="list-style-type: decimal">
 <li>What patterns will the regular expression ...... match? How would you represent it as a string?</li>
 </ol>
@@ -1459,8 +1459,8 @@ writeLines(E13)</code></pre>
 ## a\..\..\..c
 ## bef</code></pre>
 <pre class="r"><code>str_view(E13, &quot;\\\\..\\\\..\\\\..&quot;)</code></pre>
-<div id="htmlwidget-8f6eee4ad4958bdab92a" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8f6eee4ad4958bdab92a">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a<span class='match'>\\..\\..\\..<\/span>c<\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6a6f767a0ccf31cb4efd" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6a6f767a0ccf31cb4efd">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a<span class='match'>\\..\\..\\..<\/span>c<\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="anchors" class="section level3">
@@ -1469,20 +1469,20 @@ writeLines(E13)</code></pre>
 <p>^ to match the start of the string $ to match the end of the string.</p>
 <pre class="r"><code>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;)
 str_view(x, &quot;^a&quot;)</code></pre>
-<div id="htmlwidget-98b729745e55f9ce3010" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-98b729745e55f9ce3010">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f6dc7b378aa14fd6e54d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f6dc7b378aa14fd6e54d">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(x, &quot;a$&quot;)</code></pre>
-<div id="htmlwidget-01637916ee0ced5cd5e0" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-01637916ee0ced5cd5e0">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-58b6ffe2b1dff544e53d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-58b6ffe2b1dff544e53d">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>To remember which is which, try this mnemonic which I learned from Evan Misshula: if you begin with power (^), you end up with money ($).</p>
 <p>To force a regular expression to only match a complete string, anchor it with both ^ and $:</p>
 <pre class="r"><code>x &lt;- c(&quot;apple pie&quot;, &quot;apple&quot;, &quot;apple cake&quot;)
 str_view(x, &quot;apple&quot;)</code></pre>
-<div id="htmlwidget-1cf33022d9458d9cbbf7" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1cf33022d9458d9cbbf7">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e5f8bb1e2002e3108410" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e5f8bb1e2002e3108410">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(x, &quot;^apple$&quot;)</code></pre>
-<div id="htmlwidget-5cb1c2a813e70b50e561" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5cb1c2a813e70b50e561">{"x":{"html":"<ul>\n  <li>apple pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3bb99c79df1724041d12" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3bb99c79df1724041d12">{"x":{"html":"<ul>\n  <li>apple pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>You can also match the boundary between words with  I don’t often use this in R, but I will sometimes use it when I’m doing a search in RStudio when I want to find the name of a function that’s a component of other functions. For example, I’ll search for  avoid matching summarise, summary, rowsum and so on.</p>
 <div id="exercises-1" class="section level4">
 <h4>14.3.2.1 Exercises</h4>
@@ -1495,28 +1495,28 @@ writeLines(E21)</code></pre>
 ## a$^$c
 ## bef</code></pre>
 <pre class="r"><code>str_view(E21, &quot;\\$\\^\\$&quot;)</code></pre>
-<div id="htmlwidget-c9b7980fd2dca19e5524" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c9b7980fd2dca19e5524">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a<span class='match'>$^$<\/span>c<\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-40ebba3188f635c072d5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-40ebba3188f635c072d5">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a<span class='match'>$^$<\/span>c<\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ol start="2" style="list-style-type: decimal">
 <li>Given the corpus of common words in stringr::words, create regular expressions that find all words that:</li>
 </ol>
 <pre class="r"><code>E22 &lt;- c(stringr::words)</code></pre>
 <p>Start with “y”.</p>
 <pre class="r"><code>str_view(E22, &quot;^y&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-5271d1e0cc59c5072e6f" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5271d1e0cc59c5072e6f">{"x":{"html":"<ul>\n  <li><span class='match'>y<\/span>ear<\/li>\n  <li><span class='match'>y<\/span>es<\/li>\n  <li><span class='match'>y<\/span>esterday<\/li>\n  <li><span class='match'>y<\/span>et<\/li>\n  <li><span class='match'>y<\/span>ou<\/li>\n  <li><span class='match'>y<\/span>oung<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ff2ba8be5bb60aed2aaf" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ff2ba8be5bb60aed2aaf">{"x":{"html":"<ul>\n  <li><span class='match'>y<\/span>ear<\/li>\n  <li><span class='match'>y<\/span>es<\/li>\n  <li><span class='match'>y<\/span>esterday<\/li>\n  <li><span class='match'>y<\/span>et<\/li>\n  <li><span class='match'>y<\/span>ou<\/li>\n  <li><span class='match'>y<\/span>oung<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>End with “x”</p>
 <pre class="r"><code>str_view(E22, &quot;x$&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-1873bd84487b1bfe69ef" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1873bd84487b1bfe69ef">{"x":{"html":"<ul>\n  <li>bo<span class='match'>x<\/span><\/li>\n  <li>se<span class='match'>x<\/span><\/li>\n  <li>si<span class='match'>x<\/span><\/li>\n  <li>ta<span class='match'>x<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ab20eab5b9594426dfce" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ab20eab5b9594426dfce">{"x":{"html":"<ul>\n  <li>bo<span class='match'>x<\/span><\/li>\n  <li>se<span class='match'>x<\/span><\/li>\n  <li>si<span class='match'>x<\/span><\/li>\n  <li>ta<span class='match'>x<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Are exactly three letters long. (Don’t cheat by using str_length()!)</p>
 <pre class="r"><code>str_view(E22, &quot;\\b[a-zA-Z0-9]{3}\\b&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-841c7d6ce64f61156e50" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-841c7d6ce64f61156e50">{"x":{"html":"<ul>\n  <li><span class='match'>act<\/span><\/li>\n  <li><span class='match'>add<\/span><\/li>\n  <li><span class='match'>age<\/span><\/li>\n  <li><span class='match'>ago<\/span><\/li>\n  <li><span class='match'>air<\/span><\/li>\n  <li><span class='match'>all<\/span><\/li>\n  <li><span class='match'>and<\/span><\/li>\n  <li><span class='match'>any<\/span><\/li>\n  <li><span class='match'>arm<\/span><\/li>\n  <li><span class='match'>art<\/span><\/li>\n  <li><span class='match'>ask<\/span><\/li>\n  <li><span class='match'>bad<\/span><\/li>\n  <li><span class='match'>bag<\/span><\/li>\n  <li><span class='match'>bar<\/span><\/li>\n  <li><span class='match'>bed<\/span><\/li>\n  <li><span class='match'>bet<\/span><\/li>\n  <li><span class='match'>big<\/span><\/li>\n  <li><span class='match'>bit<\/span><\/li>\n  <li><span class='match'>box<\/span><\/li>\n  <li><span class='match'>boy<\/span><\/li>\n  <li><span class='match'>bus<\/span><\/li>\n  <li><span class='match'>but<\/span><\/li>\n  <li><span class='match'>buy<\/span><\/li>\n  <li><span class='match'>can<\/span><\/li>\n  <li><span class='match'>car<\/span><\/li>\n  <li><span class='match'>cat<\/span><\/li>\n  <li><span class='match'>cup<\/span><\/li>\n  <li><span class='match'>cut<\/span><\/li>\n  <li><span class='match'>dad<\/span><\/li>\n  <li><span class='match'>day<\/span><\/li>\n  <li><span class='match'>die<\/span><\/li>\n  <li><span class='match'>dog<\/span><\/li>\n  <li><span class='match'>dry<\/span><\/li>\n  <li><span class='match'>due<\/span><\/li>\n  <li><span class='match'>eat<\/span><\/li>\n  <li><span class='match'>egg<\/span><\/li>\n  <li><span class='match'>end<\/span><\/li>\n  <li><span class='match'>eye<\/span><\/li>\n  <li><span class='match'>far<\/span><\/li>\n  <li><span class='match'>few<\/span><\/li>\n  <li><span class='match'>fit<\/span><\/li>\n  <li><span class='match'>fly<\/span><\/li>\n  <li><span class='match'>for<\/span><\/li>\n  <li><span class='match'>fun<\/span><\/li>\n  <li><span class='match'>gas<\/span><\/li>\n  <li><span class='match'>get<\/span><\/li>\n  <li><span class='match'>god<\/span><\/li>\n  <li><span class='match'>guy<\/span><\/li>\n  <li><span class='match'>hit<\/span><\/li>\n  <li><span class='match'>hot<\/span><\/li>\n  <li><span class='match'>how<\/span><\/li>\n  <li><span class='match'>job<\/span><\/li>\n  <li><span class='match'>key<\/span><\/li>\n  <li><span class='match'>kid<\/span><\/li>\n  <li><span class='match'>lad<\/span><\/li>\n  <li><span class='match'>law<\/span><\/li>\n  <li><span class='match'>lay<\/span><\/li>\n  <li><span class='match'>leg<\/span><\/li>\n  <li><span class='match'>let<\/span><\/li>\n  <li><span class='match'>lie<\/span><\/li>\n  <li><span class='match'>lot<\/span><\/li>\n  <li><span class='match'>low<\/span><\/li>\n  <li><span class='match'>man<\/span><\/li>\n  <li><span class='match'>may<\/span><\/li>\n  <li><span class='match'>mrs<\/span><\/li>\n  <li><span class='match'>new<\/span><\/li>\n  <li><span class='match'>non<\/span><\/li>\n  <li><span class='match'>not<\/span><\/li>\n  <li><span class='match'>now<\/span><\/li>\n  <li><span class='match'>odd<\/span><\/li>\n  <li><span class='match'>off<\/span><\/li>\n  <li><span class='match'>old<\/span><\/li>\n  <li><span class='match'>one<\/span><\/li>\n  <li><span class='match'>out<\/span><\/li>\n  <li><span class='match'>own<\/span><\/li>\n  <li><span class='match'>pay<\/span><\/li>\n  <li><span class='match'>per<\/span><\/li>\n  <li><span class='match'>put<\/span><\/li>\n  <li><span class='match'>red<\/span><\/li>\n  <li><span class='match'>rid<\/span><\/li>\n  <li><span class='match'>run<\/span><\/li>\n  <li><span class='match'>say<\/span><\/li>\n  <li><span class='match'>see<\/span><\/li>\n  <li><span class='match'>set<\/span><\/li>\n  <li><span class='match'>sex<\/span><\/li>\n  <li><span class='match'>she<\/span><\/li>\n  <li><span class='match'>sir<\/span><\/li>\n  <li><span class='match'>sit<\/span><\/li>\n  <li><span class='match'>six<\/span><\/li>\n  <li><span class='match'>son<\/span><\/li>\n  <li><span class='match'>sun<\/span><\/li>\n  <li><span class='match'>tax<\/span><\/li>\n  <li><span class='match'>tea<\/span><\/li>\n  <li><span class='match'>ten<\/span><\/li>\n  <li><span class='match'>the<\/span><\/li>\n  <li><span class='match'>tie<\/span><\/li>\n  <li><span class='match'>too<\/span><\/li>\n  <li><span class='match'>top<\/span><\/li>\n  <li><span class='match'>try<\/span><\/li>\n  <li><span class='match'>two<\/span><\/li>\n  <li><span class='match'>use<\/span><\/li>\n  <li><span class='match'>war<\/span><\/li>\n  <li><span class='match'>way<\/span><\/li>\n  <li><span class='match'>wee<\/span><\/li>\n  <li><span class='match'>who<\/span><\/li>\n  <li><span class='match'>why<\/span><\/li>\n  <li><span class='match'>win<\/span><\/li>\n  <li><span class='match'>yes<\/span><\/li>\n  <li><span class='match'>yet<\/span><\/li>\n  <li><span class='match'>you<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-759f97b27200b3658787" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-759f97b27200b3658787">{"x":{"html":"<ul>\n  <li><span class='match'>act<\/span><\/li>\n  <li><span class='match'>add<\/span><\/li>\n  <li><span class='match'>age<\/span><\/li>\n  <li><span class='match'>ago<\/span><\/li>\n  <li><span class='match'>air<\/span><\/li>\n  <li><span class='match'>all<\/span><\/li>\n  <li><span class='match'>and<\/span><\/li>\n  <li><span class='match'>any<\/span><\/li>\n  <li><span class='match'>arm<\/span><\/li>\n  <li><span class='match'>art<\/span><\/li>\n  <li><span class='match'>ask<\/span><\/li>\n  <li><span class='match'>bad<\/span><\/li>\n  <li><span class='match'>bag<\/span><\/li>\n  <li><span class='match'>bar<\/span><\/li>\n  <li><span class='match'>bed<\/span><\/li>\n  <li><span class='match'>bet<\/span><\/li>\n  <li><span class='match'>big<\/span><\/li>\n  <li><span class='match'>bit<\/span><\/li>\n  <li><span class='match'>box<\/span><\/li>\n  <li><span class='match'>boy<\/span><\/li>\n  <li><span class='match'>bus<\/span><\/li>\n  <li><span class='match'>but<\/span><\/li>\n  <li><span class='match'>buy<\/span><\/li>\n  <li><span class='match'>can<\/span><\/li>\n  <li><span class='match'>car<\/span><\/li>\n  <li><span class='match'>cat<\/span><\/li>\n  <li><span class='match'>cup<\/span><\/li>\n  <li><span class='match'>cut<\/span><\/li>\n  <li><span class='match'>dad<\/span><\/li>\n  <li><span class='match'>day<\/span><\/li>\n  <li><span class='match'>die<\/span><\/li>\n  <li><span class='match'>dog<\/span><\/li>\n  <li><span class='match'>dry<\/span><\/li>\n  <li><span class='match'>due<\/span><\/li>\n  <li><span class='match'>eat<\/span><\/li>\n  <li><span class='match'>egg<\/span><\/li>\n  <li><span class='match'>end<\/span><\/li>\n  <li><span class='match'>eye<\/span><\/li>\n  <li><span class='match'>far<\/span><\/li>\n  <li><span class='match'>few<\/span><\/li>\n  <li><span class='match'>fit<\/span><\/li>\n  <li><span class='match'>fly<\/span><\/li>\n  <li><span class='match'>for<\/span><\/li>\n  <li><span class='match'>fun<\/span><\/li>\n  <li><span class='match'>gas<\/span><\/li>\n  <li><span class='match'>get<\/span><\/li>\n  <li><span class='match'>god<\/span><\/li>\n  <li><span class='match'>guy<\/span><\/li>\n  <li><span class='match'>hit<\/span><\/li>\n  <li><span class='match'>hot<\/span><\/li>\n  <li><span class='match'>how<\/span><\/li>\n  <li><span class='match'>job<\/span><\/li>\n  <li><span class='match'>key<\/span><\/li>\n  <li><span class='match'>kid<\/span><\/li>\n  <li><span class='match'>lad<\/span><\/li>\n  <li><span class='match'>law<\/span><\/li>\n  <li><span class='match'>lay<\/span><\/li>\n  <li><span class='match'>leg<\/span><\/li>\n  <li><span class='match'>let<\/span><\/li>\n  <li><span class='match'>lie<\/span><\/li>\n  <li><span class='match'>lot<\/span><\/li>\n  <li><span class='match'>low<\/span><\/li>\n  <li><span class='match'>man<\/span><\/li>\n  <li><span class='match'>may<\/span><\/li>\n  <li><span class='match'>mrs<\/span><\/li>\n  <li><span class='match'>new<\/span><\/li>\n  <li><span class='match'>non<\/span><\/li>\n  <li><span class='match'>not<\/span><\/li>\n  <li><span class='match'>now<\/span><\/li>\n  <li><span class='match'>odd<\/span><\/li>\n  <li><span class='match'>off<\/span><\/li>\n  <li><span class='match'>old<\/span><\/li>\n  <li><span class='match'>one<\/span><\/li>\n  <li><span class='match'>out<\/span><\/li>\n  <li><span class='match'>own<\/span><\/li>\n  <li><span class='match'>pay<\/span><\/li>\n  <li><span class='match'>per<\/span><\/li>\n  <li><span class='match'>put<\/span><\/li>\n  <li><span class='match'>red<\/span><\/li>\n  <li><span class='match'>rid<\/span><\/li>\n  <li><span class='match'>run<\/span><\/li>\n  <li><span class='match'>say<\/span><\/li>\n  <li><span class='match'>see<\/span><\/li>\n  <li><span class='match'>set<\/span><\/li>\n  <li><span class='match'>sex<\/span><\/li>\n  <li><span class='match'>she<\/span><\/li>\n  <li><span class='match'>sir<\/span><\/li>\n  <li><span class='match'>sit<\/span><\/li>\n  <li><span class='match'>six<\/span><\/li>\n  <li><span class='match'>son<\/span><\/li>\n  <li><span class='match'>sun<\/span><\/li>\n  <li><span class='match'>tax<\/span><\/li>\n  <li><span class='match'>tea<\/span><\/li>\n  <li><span class='match'>ten<\/span><\/li>\n  <li><span class='match'>the<\/span><\/li>\n  <li><span class='match'>tie<\/span><\/li>\n  <li><span class='match'>too<\/span><\/li>\n  <li><span class='match'>top<\/span><\/li>\n  <li><span class='match'>try<\/span><\/li>\n  <li><span class='match'>two<\/span><\/li>\n  <li><span class='match'>use<\/span><\/li>\n  <li><span class='match'>war<\/span><\/li>\n  <li><span class='match'>way<\/span><\/li>\n  <li><span class='match'>wee<\/span><\/li>\n  <li><span class='match'>who<\/span><\/li>\n  <li><span class='match'>why<\/span><\/li>\n  <li><span class='match'>win<\/span><\/li>\n  <li><span class='match'>yes<\/span><\/li>\n  <li><span class='match'>yet<\/span><\/li>\n  <li><span class='match'>you<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Have seven letters or more.</p>
 <pre class="r"><code>str_view(E22, &quot;\\b[a-zA-Z0-9]{7,}\\b&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-fdec2bd6b3fb9f1b4019" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fdec2bd6b3fb9f1b4019">{"x":{"html":"<ul>\n  <li><span class='match'>absolute<\/span><\/li>\n  <li><span class='match'>account<\/span><\/li>\n  <li><span class='match'>achieve<\/span><\/li>\n  <li><span class='match'>address<\/span><\/li>\n  <li><span class='match'>advertise<\/span><\/li>\n  <li><span class='match'>afternoon<\/span><\/li>\n  <li><span class='match'>against<\/span><\/li>\n  <li><span class='match'>already<\/span><\/li>\n  <li><span class='match'>alright<\/span><\/li>\n  <li><span class='match'>although<\/span><\/li>\n  <li><span class='match'>america<\/span><\/li>\n  <li><span class='match'>another<\/span><\/li>\n  <li><span class='match'>apparent<\/span><\/li>\n  <li><span class='match'>appoint<\/span><\/li>\n  <li><span class='match'>approach<\/span><\/li>\n  <li><span class='match'>appropriate<\/span><\/li>\n  <li><span class='match'>arrange<\/span><\/li>\n  <li><span class='match'>associate<\/span><\/li>\n  <li><span class='match'>authority<\/span><\/li>\n  <li><span class='match'>available<\/span><\/li>\n  <li><span class='match'>balance<\/span><\/li>\n  <li><span class='match'>because<\/span><\/li>\n  <li><span class='match'>believe<\/span><\/li>\n  <li><span class='match'>benefit<\/span><\/li>\n  <li><span class='match'>between<\/span><\/li>\n  <li><span class='match'>brilliant<\/span><\/li>\n  <li><span class='match'>britain<\/span><\/li>\n  <li><span class='match'>brother<\/span><\/li>\n  <li><span class='match'>business<\/span><\/li>\n  <li><span class='match'>certain<\/span><\/li>\n  <li><span class='match'>chairman<\/span><\/li>\n  <li><span class='match'>character<\/span><\/li>\n  <li><span class='match'>Christmas<\/span><\/li>\n  <li><span class='match'>colleague<\/span><\/li>\n  <li><span class='match'>collect<\/span><\/li>\n  <li><span class='match'>college<\/span><\/li>\n  <li><span class='match'>comment<\/span><\/li>\n  <li><span class='match'>committee<\/span><\/li>\n  <li><span class='match'>community<\/span><\/li>\n  <li><span class='match'>company<\/span><\/li>\n  <li><span class='match'>compare<\/span><\/li>\n  <li><span class='match'>complete<\/span><\/li>\n  <li><span class='match'>compute<\/span><\/li>\n  <li><span class='match'>concern<\/span><\/li>\n  <li><span class='match'>condition<\/span><\/li>\n  <li><span class='match'>consider<\/span><\/li>\n  <li><span class='match'>consult<\/span><\/li>\n  <li><span class='match'>contact<\/span><\/li>\n  <li><span class='match'>continue<\/span><\/li>\n  <li><span class='match'>contract<\/span><\/li>\n  <li><span class='match'>control<\/span><\/li>\n  <li><span class='match'>converse<\/span><\/li>\n  <li><span class='match'>correct<\/span><\/li>\n  <li><span class='match'>council<\/span><\/li>\n  <li><span class='match'>country<\/span><\/li>\n  <li><span class='match'>current<\/span><\/li>\n  <li><span class='match'>decision<\/span><\/li>\n  <li><span class='match'>definite<\/span><\/li>\n  <li><span class='match'>department<\/span><\/li>\n  <li><span class='match'>describe<\/span><\/li>\n  <li><span class='match'>develop<\/span><\/li>\n  <li><span class='match'>difference<\/span><\/li>\n  <li><span class='match'>difficult<\/span><\/li>\n  <li><span class='match'>discuss<\/span><\/li>\n  <li><span class='match'>district<\/span><\/li>\n  <li><span class='match'>document<\/span><\/li>\n  <li><span class='match'>economy<\/span><\/li>\n  <li><span class='match'>educate<\/span><\/li>\n  <li><span class='match'>electric<\/span><\/li>\n  <li><span class='match'>encourage<\/span><\/li>\n  <li><span class='match'>english<\/span><\/li>\n  <li><span class='match'>environment<\/span><\/li>\n  <li><span class='match'>especial<\/span><\/li>\n  <li><span class='match'>evening<\/span><\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>example<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>expense<\/span><\/li>\n  <li><span class='match'>experience<\/span><\/li>\n  <li><span class='match'>explain<\/span><\/li>\n  <li><span class='match'>express<\/span><\/li>\n  <li><span class='match'>finance<\/span><\/li>\n  <li><span class='match'>fortune<\/span><\/li>\n  <li><span class='match'>forward<\/span><\/li>\n  <li><span class='match'>function<\/span><\/li>\n  <li><span class='match'>further<\/span><\/li>\n  <li><span class='match'>general<\/span><\/li>\n  <li><span class='match'>germany<\/span><\/li>\n  <li><span class='match'>goodbye<\/span><\/li>\n  <li><span class='match'>history<\/span><\/li>\n  <li><span class='match'>holiday<\/span><\/li>\n  <li><span class='match'>hospital<\/span><\/li>\n  <li><span class='match'>however<\/span><\/li>\n  <li><span class='match'>hundred<\/span><\/li>\n  <li><span class='match'>husband<\/span><\/li>\n  <li><span class='match'>identify<\/span><\/li>\n  <li><span class='match'>imagine<\/span><\/li>\n  <li><span class='match'>important<\/span><\/li>\n  <li><span class='match'>improve<\/span><\/li>\n  <li><span class='match'>include<\/span><\/li>\n  <li><span class='match'>increase<\/span><\/li>\n  <li><span class='match'>individual<\/span><\/li>\n  <li><span class='match'>industry<\/span><\/li>\n  <li><span class='match'>instead<\/span><\/li>\n  <li><span class='match'>interest<\/span><\/li>\n  <li><span class='match'>introduce<\/span><\/li>\n  <li><span class='match'>involve<\/span><\/li>\n  <li><span class='match'>kitchen<\/span><\/li>\n  <li><span class='match'>language<\/span><\/li>\n  <li><span class='match'>machine<\/span><\/li>\n  <li><span class='match'>meaning<\/span><\/li>\n  <li><span class='match'>measure<\/span><\/li>\n  <li><span class='match'>mention<\/span><\/li>\n  <li><span class='match'>million<\/span><\/li>\n  <li><span class='match'>minister<\/span><\/li>\n  <li><span class='match'>morning<\/span><\/li>\n  <li><span class='match'>necessary<\/span><\/li>\n  <li><span class='match'>obvious<\/span><\/li>\n  <li><span class='match'>occasion<\/span><\/li>\n  <li><span class='match'>operate<\/span><\/li>\n  <li><span class='match'>opportunity<\/span><\/li>\n  <li><span class='match'>organize<\/span><\/li>\n  <li><span class='match'>original<\/span><\/li>\n  <li><span class='match'>otherwise<\/span><\/li>\n  <li><span class='match'>paragraph<\/span><\/li>\n  <li><span class='match'>particular<\/span><\/li>\n  <li><span class='match'>pension<\/span><\/li>\n  <li><span class='match'>percent<\/span><\/li>\n  <li><span class='match'>perfect<\/span><\/li>\n  <li><span class='match'>perhaps<\/span><\/li>\n  <li><span class='match'>photograph<\/span><\/li>\n  <li><span class='match'>picture<\/span><\/li>\n  <li><span class='match'>politic<\/span><\/li>\n  <li><span class='match'>position<\/span><\/li>\n  <li><span class='match'>positive<\/span><\/li>\n  <li><span class='match'>possible<\/span><\/li>\n  <li><span class='match'>practise<\/span><\/li>\n  <li><span class='match'>prepare<\/span><\/li>\n  <li><span class='match'>present<\/span><\/li>\n  <li><span class='match'>pressure<\/span><\/li>\n  <li><span class='match'>presume<\/span><\/li>\n  <li><span class='match'>previous<\/span><\/li>\n  <li><span class='match'>private<\/span><\/li>\n  <li><span class='match'>probable<\/span><\/li>\n  <li><span class='match'>problem<\/span><\/li>\n  <li><span class='match'>proceed<\/span><\/li>\n  <li><span class='match'>process<\/span><\/li>\n  <li><span class='match'>produce<\/span><\/li>\n  <li><span class='match'>product<\/span><\/li>\n  <li><span class='match'>programme<\/span><\/li>\n  <li><span class='match'>project<\/span><\/li>\n  <li><span class='match'>propose<\/span><\/li>\n  <li><span class='match'>protect<\/span><\/li>\n  <li><span class='match'>provide<\/span><\/li>\n  <li><span class='match'>purpose<\/span><\/li>\n  <li><span class='match'>quality<\/span><\/li>\n  <li><span class='match'>quarter<\/span><\/li>\n  <li><span class='match'>question<\/span><\/li>\n  <li><span class='match'>realise<\/span><\/li>\n  <li><span class='match'>receive<\/span><\/li>\n  <li><span class='match'>recognize<\/span><\/li>\n  <li><span class='match'>recommend<\/span><\/li>\n  <li><span class='match'>relation<\/span><\/li>\n  <li><span class='match'>remember<\/span><\/li>\n  <li><span class='match'>represent<\/span><\/li>\n  <li><span class='match'>require<\/span><\/li>\n  <li><span class='match'>research<\/span><\/li>\n  <li><span class='match'>resource<\/span><\/li>\n  <li><span class='match'>respect<\/span><\/li>\n  <li><span class='match'>responsible<\/span><\/li>\n  <li><span class='match'>saturday<\/span><\/li>\n  <li><span class='match'>science<\/span><\/li>\n  <li><span class='match'>scotland<\/span><\/li>\n  <li><span class='match'>secretary<\/span><\/li>\n  <li><span class='match'>section<\/span><\/li>\n  <li><span class='match'>separate<\/span><\/li>\n  <li><span class='match'>serious<\/span><\/li>\n  <li><span class='match'>service<\/span><\/li>\n  <li><span class='match'>similar<\/span><\/li>\n  <li><span class='match'>situate<\/span><\/li>\n  <li><span class='match'>society<\/span><\/li>\n  <li><span class='match'>special<\/span><\/li>\n  <li><span class='match'>specific<\/span><\/li>\n  <li><span class='match'>standard<\/span><\/li>\n  <li><span class='match'>station<\/span><\/li>\n  <li><span class='match'>straight<\/span><\/li>\n  <li><span class='match'>strategy<\/span><\/li>\n  <li><span class='match'>structure<\/span><\/li>\n  <li><span class='match'>student<\/span><\/li>\n  <li><span class='match'>subject<\/span><\/li>\n  <li><span class='match'>succeed<\/span><\/li>\n  <li><span class='match'>suggest<\/span><\/li>\n  <li><span class='match'>support<\/span><\/li>\n  <li><span class='match'>suppose<\/span><\/li>\n  <li><span class='match'>surprise<\/span><\/li>\n  <li><span class='match'>telephone<\/span><\/li>\n  <li><span class='match'>television<\/span><\/li>\n  <li><span class='match'>terrible<\/span><\/li>\n  <li><span class='match'>therefore<\/span><\/li>\n  <li><span class='match'>thirteen<\/span><\/li>\n  <li><span class='match'>thousand<\/span><\/li>\n  <li><span class='match'>through<\/span><\/li>\n  <li><span class='match'>thursday<\/span><\/li>\n  <li><span class='match'>together<\/span><\/li>\n  <li><span class='match'>tomorrow<\/span><\/li>\n  <li><span class='match'>tonight<\/span><\/li>\n  <li><span class='match'>traffic<\/span><\/li>\n  <li><span class='match'>transport<\/span><\/li>\n  <li><span class='match'>trouble<\/span><\/li>\n  <li><span class='match'>tuesday<\/span><\/li>\n  <li><span class='match'>understand<\/span><\/li>\n  <li><span class='match'>university<\/span><\/li>\n  <li><span class='match'>various<\/span><\/li>\n  <li><span class='match'>village<\/span><\/li>\n  <li><span class='match'>wednesday<\/span><\/li>\n  <li><span class='match'>welcome<\/span><\/li>\n  <li><span class='match'>whether<\/span><\/li>\n  <li><span class='match'>without<\/span><\/li>\n  <li><span class='match'>yesterday<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7602e93abc01ac44fa83" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7602e93abc01ac44fa83">{"x":{"html":"<ul>\n  <li><span class='match'>absolute<\/span><\/li>\n  <li><span class='match'>account<\/span><\/li>\n  <li><span class='match'>achieve<\/span><\/li>\n  <li><span class='match'>address<\/span><\/li>\n  <li><span class='match'>advertise<\/span><\/li>\n  <li><span class='match'>afternoon<\/span><\/li>\n  <li><span class='match'>against<\/span><\/li>\n  <li><span class='match'>already<\/span><\/li>\n  <li><span class='match'>alright<\/span><\/li>\n  <li><span class='match'>although<\/span><\/li>\n  <li><span class='match'>america<\/span><\/li>\n  <li><span class='match'>another<\/span><\/li>\n  <li><span class='match'>apparent<\/span><\/li>\n  <li><span class='match'>appoint<\/span><\/li>\n  <li><span class='match'>approach<\/span><\/li>\n  <li><span class='match'>appropriate<\/span><\/li>\n  <li><span class='match'>arrange<\/span><\/li>\n  <li><span class='match'>associate<\/span><\/li>\n  <li><span class='match'>authority<\/span><\/li>\n  <li><span class='match'>available<\/span><\/li>\n  <li><span class='match'>balance<\/span><\/li>\n  <li><span class='match'>because<\/span><\/li>\n  <li><span class='match'>believe<\/span><\/li>\n  <li><span class='match'>benefit<\/span><\/li>\n  <li><span class='match'>between<\/span><\/li>\n  <li><span class='match'>brilliant<\/span><\/li>\n  <li><span class='match'>britain<\/span><\/li>\n  <li><span class='match'>brother<\/span><\/li>\n  <li><span class='match'>business<\/span><\/li>\n  <li><span class='match'>certain<\/span><\/li>\n  <li><span class='match'>chairman<\/span><\/li>\n  <li><span class='match'>character<\/span><\/li>\n  <li><span class='match'>Christmas<\/span><\/li>\n  <li><span class='match'>colleague<\/span><\/li>\n  <li><span class='match'>collect<\/span><\/li>\n  <li><span class='match'>college<\/span><\/li>\n  <li><span class='match'>comment<\/span><\/li>\n  <li><span class='match'>committee<\/span><\/li>\n  <li><span class='match'>community<\/span><\/li>\n  <li><span class='match'>company<\/span><\/li>\n  <li><span class='match'>compare<\/span><\/li>\n  <li><span class='match'>complete<\/span><\/li>\n  <li><span class='match'>compute<\/span><\/li>\n  <li><span class='match'>concern<\/span><\/li>\n  <li><span class='match'>condition<\/span><\/li>\n  <li><span class='match'>consider<\/span><\/li>\n  <li><span class='match'>consult<\/span><\/li>\n  <li><span class='match'>contact<\/span><\/li>\n  <li><span class='match'>continue<\/span><\/li>\n  <li><span class='match'>contract<\/span><\/li>\n  <li><span class='match'>control<\/span><\/li>\n  <li><span class='match'>converse<\/span><\/li>\n  <li><span class='match'>correct<\/span><\/li>\n  <li><span class='match'>council<\/span><\/li>\n  <li><span class='match'>country<\/span><\/li>\n  <li><span class='match'>current<\/span><\/li>\n  <li><span class='match'>decision<\/span><\/li>\n  <li><span class='match'>definite<\/span><\/li>\n  <li><span class='match'>department<\/span><\/li>\n  <li><span class='match'>describe<\/span><\/li>\n  <li><span class='match'>develop<\/span><\/li>\n  <li><span class='match'>difference<\/span><\/li>\n  <li><span class='match'>difficult<\/span><\/li>\n  <li><span class='match'>discuss<\/span><\/li>\n  <li><span class='match'>district<\/span><\/li>\n  <li><span class='match'>document<\/span><\/li>\n  <li><span class='match'>economy<\/span><\/li>\n  <li><span class='match'>educate<\/span><\/li>\n  <li><span class='match'>electric<\/span><\/li>\n  <li><span class='match'>encourage<\/span><\/li>\n  <li><span class='match'>english<\/span><\/li>\n  <li><span class='match'>environment<\/span><\/li>\n  <li><span class='match'>especial<\/span><\/li>\n  <li><span class='match'>evening<\/span><\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>example<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>expense<\/span><\/li>\n  <li><span class='match'>experience<\/span><\/li>\n  <li><span class='match'>explain<\/span><\/li>\n  <li><span class='match'>express<\/span><\/li>\n  <li><span class='match'>finance<\/span><\/li>\n  <li><span class='match'>fortune<\/span><\/li>\n  <li><span class='match'>forward<\/span><\/li>\n  <li><span class='match'>function<\/span><\/li>\n  <li><span class='match'>further<\/span><\/li>\n  <li><span class='match'>general<\/span><\/li>\n  <li><span class='match'>germany<\/span><\/li>\n  <li><span class='match'>goodbye<\/span><\/li>\n  <li><span class='match'>history<\/span><\/li>\n  <li><span class='match'>holiday<\/span><\/li>\n  <li><span class='match'>hospital<\/span><\/li>\n  <li><span class='match'>however<\/span><\/li>\n  <li><span class='match'>hundred<\/span><\/li>\n  <li><span class='match'>husband<\/span><\/li>\n  <li><span class='match'>identify<\/span><\/li>\n  <li><span class='match'>imagine<\/span><\/li>\n  <li><span class='match'>important<\/span><\/li>\n  <li><span class='match'>improve<\/span><\/li>\n  <li><span class='match'>include<\/span><\/li>\n  <li><span class='match'>increase<\/span><\/li>\n  <li><span class='match'>individual<\/span><\/li>\n  <li><span class='match'>industry<\/span><\/li>\n  <li><span class='match'>instead<\/span><\/li>\n  <li><span class='match'>interest<\/span><\/li>\n  <li><span class='match'>introduce<\/span><\/li>\n  <li><span class='match'>involve<\/span><\/li>\n  <li><span class='match'>kitchen<\/span><\/li>\n  <li><span class='match'>language<\/span><\/li>\n  <li><span class='match'>machine<\/span><\/li>\n  <li><span class='match'>meaning<\/span><\/li>\n  <li><span class='match'>measure<\/span><\/li>\n  <li><span class='match'>mention<\/span><\/li>\n  <li><span class='match'>million<\/span><\/li>\n  <li><span class='match'>minister<\/span><\/li>\n  <li><span class='match'>morning<\/span><\/li>\n  <li><span class='match'>necessary<\/span><\/li>\n  <li><span class='match'>obvious<\/span><\/li>\n  <li><span class='match'>occasion<\/span><\/li>\n  <li><span class='match'>operate<\/span><\/li>\n  <li><span class='match'>opportunity<\/span><\/li>\n  <li><span class='match'>organize<\/span><\/li>\n  <li><span class='match'>original<\/span><\/li>\n  <li><span class='match'>otherwise<\/span><\/li>\n  <li><span class='match'>paragraph<\/span><\/li>\n  <li><span class='match'>particular<\/span><\/li>\n  <li><span class='match'>pension<\/span><\/li>\n  <li><span class='match'>percent<\/span><\/li>\n  <li><span class='match'>perfect<\/span><\/li>\n  <li><span class='match'>perhaps<\/span><\/li>\n  <li><span class='match'>photograph<\/span><\/li>\n  <li><span class='match'>picture<\/span><\/li>\n  <li><span class='match'>politic<\/span><\/li>\n  <li><span class='match'>position<\/span><\/li>\n  <li><span class='match'>positive<\/span><\/li>\n  <li><span class='match'>possible<\/span><\/li>\n  <li><span class='match'>practise<\/span><\/li>\n  <li><span class='match'>prepare<\/span><\/li>\n  <li><span class='match'>present<\/span><\/li>\n  <li><span class='match'>pressure<\/span><\/li>\n  <li><span class='match'>presume<\/span><\/li>\n  <li><span class='match'>previous<\/span><\/li>\n  <li><span class='match'>private<\/span><\/li>\n  <li><span class='match'>probable<\/span><\/li>\n  <li><span class='match'>problem<\/span><\/li>\n  <li><span class='match'>proceed<\/span><\/li>\n  <li><span class='match'>process<\/span><\/li>\n  <li><span class='match'>produce<\/span><\/li>\n  <li><span class='match'>product<\/span><\/li>\n  <li><span class='match'>programme<\/span><\/li>\n  <li><span class='match'>project<\/span><\/li>\n  <li><span class='match'>propose<\/span><\/li>\n  <li><span class='match'>protect<\/span><\/li>\n  <li><span class='match'>provide<\/span><\/li>\n  <li><span class='match'>purpose<\/span><\/li>\n  <li><span class='match'>quality<\/span><\/li>\n  <li><span class='match'>quarter<\/span><\/li>\n  <li><span class='match'>question<\/span><\/li>\n  <li><span class='match'>realise<\/span><\/li>\n  <li><span class='match'>receive<\/span><\/li>\n  <li><span class='match'>recognize<\/span><\/li>\n  <li><span class='match'>recommend<\/span><\/li>\n  <li><span class='match'>relation<\/span><\/li>\n  <li><span class='match'>remember<\/span><\/li>\n  <li><span class='match'>represent<\/span><\/li>\n  <li><span class='match'>require<\/span><\/li>\n  <li><span class='match'>research<\/span><\/li>\n  <li><span class='match'>resource<\/span><\/li>\n  <li><span class='match'>respect<\/span><\/li>\n  <li><span class='match'>responsible<\/span><\/li>\n  <li><span class='match'>saturday<\/span><\/li>\n  <li><span class='match'>science<\/span><\/li>\n  <li><span class='match'>scotland<\/span><\/li>\n  <li><span class='match'>secretary<\/span><\/li>\n  <li><span class='match'>section<\/span><\/li>\n  <li><span class='match'>separate<\/span><\/li>\n  <li><span class='match'>serious<\/span><\/li>\n  <li><span class='match'>service<\/span><\/li>\n  <li><span class='match'>similar<\/span><\/li>\n  <li><span class='match'>situate<\/span><\/li>\n  <li><span class='match'>society<\/span><\/li>\n  <li><span class='match'>special<\/span><\/li>\n  <li><span class='match'>specific<\/span><\/li>\n  <li><span class='match'>standard<\/span><\/li>\n  <li><span class='match'>station<\/span><\/li>\n  <li><span class='match'>straight<\/span><\/li>\n  <li><span class='match'>strategy<\/span><\/li>\n  <li><span class='match'>structure<\/span><\/li>\n  <li><span class='match'>student<\/span><\/li>\n  <li><span class='match'>subject<\/span><\/li>\n  <li><span class='match'>succeed<\/span><\/li>\n  <li><span class='match'>suggest<\/span><\/li>\n  <li><span class='match'>support<\/span><\/li>\n  <li><span class='match'>suppose<\/span><\/li>\n  <li><span class='match'>surprise<\/span><\/li>\n  <li><span class='match'>telephone<\/span><\/li>\n  <li><span class='match'>television<\/span><\/li>\n  <li><span class='match'>terrible<\/span><\/li>\n  <li><span class='match'>therefore<\/span><\/li>\n  <li><span class='match'>thirteen<\/span><\/li>\n  <li><span class='match'>thousand<\/span><\/li>\n  <li><span class='match'>through<\/span><\/li>\n  <li><span class='match'>thursday<\/span><\/li>\n  <li><span class='match'>together<\/span><\/li>\n  <li><span class='match'>tomorrow<\/span><\/li>\n  <li><span class='match'>tonight<\/span><\/li>\n  <li><span class='match'>traffic<\/span><\/li>\n  <li><span class='match'>transport<\/span><\/li>\n  <li><span class='match'>trouble<\/span><\/li>\n  <li><span class='match'>tuesday<\/span><\/li>\n  <li><span class='match'>understand<\/span><\/li>\n  <li><span class='match'>university<\/span><\/li>\n  <li><span class='match'>various<\/span><\/li>\n  <li><span class='match'>village<\/span><\/li>\n  <li><span class='match'>wednesday<\/span><\/li>\n  <li><span class='match'>welcome<\/span><\/li>\n  <li><span class='match'>whether<\/span><\/li>\n  <li><span class='match'>without<\/span><\/li>\n  <li><span class='match'>yesterday<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="character-classes-and-alternatives" class="section level3">
@@ -1533,46 +1533,46 @@ writeLines(E21)</code></pre>
 <pre class="r"><code># Look for a literal character that normally has special meaning in a regex
 x &lt;- c(&quot;abc&quot;, &quot;a.c&quot;, &quot;a*c&quot;, &quot;a c&quot;)
 str_view(x, &quot;a[.]c&quot;)</code></pre>
-<div id="htmlwidget-2210f869f52e4b3f0c91" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2210f869f52e4b3f0c91">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n  <li>a*c<\/li>\n  <li>a c<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c4ce7d1f5cb9811e895e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c4ce7d1f5cb9811e895e">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n  <li>a*c<\/li>\n  <li>a c<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(x, &quot;.[*]c&quot;)</code></pre>
-<div id="htmlwidget-1b50c8147cb1889aa3e8" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1b50c8147cb1889aa3e8">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a.c<\/li>\n  <li><span class='match'>a*c<\/span><\/li>\n  <li>a c<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-971d94381a858d9fe758" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-971d94381a858d9fe758">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a.c<\/li>\n  <li><span class='match'>a*c<\/span><\/li>\n  <li>a c<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(x, &quot;a[ ]&quot;)</code></pre>
-<div id="htmlwidget-f62f63df23f4b6752233" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f62f63df23f4b6752233">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a.c<\/li>\n  <li>a*c<\/li>\n  <li><span class='match'>a <\/span>c<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9cf46a0a3f27c89d5c10" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9cf46a0a3f27c89d5c10">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li>a.c<\/li>\n  <li>a*c<\/li>\n  <li><span class='match'>a <\/span>c<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>This works for most (but not all) regex metacharacters: $ . | ? * + ( ) [ {. Unfortunately, a few characters have special meaning even inside a character class and must be handled with backslash escapes: ]  ^ and -.</p>
 <p>You can use alternation to pick between one or more alternative patterns. For example, abc|d..f will match either ‘“abc”’, or “deaf”. Note that the precedence for | is low, so that abc|xyz matches abc or xyz not abcyz or abxyz. Like with mathematical expressions, if precedence ever gets confusing, use parentheses to make it clear what you want:</p>
 <pre class="r"><code>x &lt;- c(&quot;grey&quot;, &quot;gray&quot;)
 str_view(x, &quot;gr(e|a)y&quot;)</code></pre>
-<div id="htmlwidget-b1c10c31e9402b39ca6b" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b1c10c31e9402b39ca6b">{"x":{"html":"<ul>\n  <li><span class='match'>grey<\/span><\/li>\n  <li><span class='match'>gray<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dc0b9b9b3d1a9b031ee4" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dc0b9b9b3d1a9b031ee4">{"x":{"html":"<ul>\n  <li><span class='match'>grey<\/span><\/li>\n  <li><span class='match'>gray<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <div id="exercises-2" class="section level4">
 <h4>14.3.3.1 Exercises</h4>
 <p>Create regular expressions to find all words that:</p>
 <p>Start with a vowel.</p>
 <pre class="r"><code>str_view(stringr::words, &quot;^[aeiou]&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-fef9b69d1a12f6635b88" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fef9b69d1a12f6635b88">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>ble<\/li>\n  <li><span class='match'>a<\/span>bout<\/li>\n  <li><span class='match'>a<\/span>bsolute<\/li>\n  <li><span class='match'>a<\/span>ccept<\/li>\n  <li><span class='match'>a<\/span>ccount<\/li>\n  <li><span class='match'>a<\/span>chieve<\/li>\n  <li><span class='match'>a<\/span>cross<\/li>\n  <li><span class='match'>a<\/span>ct<\/li>\n  <li><span class='match'>a<\/span>ctive<\/li>\n  <li><span class='match'>a<\/span>ctual<\/li>\n  <li><span class='match'>a<\/span>dd<\/li>\n  <li><span class='match'>a<\/span>ddress<\/li>\n  <li><span class='match'>a<\/span>dmit<\/li>\n  <li><span class='match'>a<\/span>dvertise<\/li>\n  <li><span class='match'>a<\/span>ffect<\/li>\n  <li><span class='match'>a<\/span>fford<\/li>\n  <li><span class='match'>a<\/span>fter<\/li>\n  <li><span class='match'>a<\/span>fternoon<\/li>\n  <li><span class='match'>a<\/span>gain<\/li>\n  <li><span class='match'>a<\/span>gainst<\/li>\n  <li><span class='match'>a<\/span>ge<\/li>\n  <li><span class='match'>a<\/span>gent<\/li>\n  <li><span class='match'>a<\/span>go<\/li>\n  <li><span class='match'>a<\/span>gree<\/li>\n  <li><span class='match'>a<\/span>ir<\/li>\n  <li><span class='match'>a<\/span>ll<\/li>\n  <li><span class='match'>a<\/span>llow<\/li>\n  <li><span class='match'>a<\/span>lmost<\/li>\n  <li><span class='match'>a<\/span>long<\/li>\n  <li><span class='match'>a<\/span>lready<\/li>\n  <li><span class='match'>a<\/span>lright<\/li>\n  <li><span class='match'>a<\/span>lso<\/li>\n  <li><span class='match'>a<\/span>lthough<\/li>\n  <li><span class='match'>a<\/span>lways<\/li>\n  <li><span class='match'>a<\/span>merica<\/li>\n  <li><span class='match'>a<\/span>mount<\/li>\n  <li><span class='match'>a<\/span>nd<\/li>\n  <li><span class='match'>a<\/span>nother<\/li>\n  <li><span class='match'>a<\/span>nswer<\/li>\n  <li><span class='match'>a<\/span>ny<\/li>\n  <li><span class='match'>a<\/span>part<\/li>\n  <li><span class='match'>a<\/span>pparent<\/li>\n  <li><span class='match'>a<\/span>ppear<\/li>\n  <li><span class='match'>a<\/span>pply<\/li>\n  <li><span class='match'>a<\/span>ppoint<\/li>\n  <li><span class='match'>a<\/span>pproach<\/li>\n  <li><span class='match'>a<\/span>ppropriate<\/li>\n  <li><span class='match'>a<\/span>rea<\/li>\n  <li><span class='match'>a<\/span>rgue<\/li>\n  <li><span class='match'>a<\/span>rm<\/li>\n  <li><span class='match'>a<\/span>round<\/li>\n  <li><span class='match'>a<\/span>rrange<\/li>\n  <li><span class='match'>a<\/span>rt<\/li>\n  <li><span class='match'>a<\/span>s<\/li>\n  <li><span class='match'>a<\/span>sk<\/li>\n  <li><span class='match'>a<\/span>ssociate<\/li>\n  <li><span class='match'>a<\/span>ssume<\/li>\n  <li><span class='match'>a<\/span>t<\/li>\n  <li><span class='match'>a<\/span>ttend<\/li>\n  <li><span class='match'>a<\/span>uthority<\/li>\n  <li><span class='match'>a<\/span>vailable<\/li>\n  <li><span class='match'>a<\/span>ware<\/li>\n  <li><span class='match'>a<\/span>way<\/li>\n  <li><span class='match'>a<\/span>wful<\/li>\n  <li><span class='match'>e<\/span>ach<\/li>\n  <li><span class='match'>e<\/span>arly<\/li>\n  <li><span class='match'>e<\/span>ast<\/li>\n  <li><span class='match'>e<\/span>asy<\/li>\n  <li><span class='match'>e<\/span>at<\/li>\n  <li><span class='match'>e<\/span>conomy<\/li>\n  <li><span class='match'>e<\/span>ducate<\/li>\n  <li><span class='match'>e<\/span>ffect<\/li>\n  <li><span class='match'>e<\/span>gg<\/li>\n  <li><span class='match'>e<\/span>ight<\/li>\n  <li><span class='match'>e<\/span>ither<\/li>\n  <li><span class='match'>e<\/span>lect<\/li>\n  <li><span class='match'>e<\/span>lectric<\/li>\n  <li><span class='match'>e<\/span>leven<\/li>\n  <li><span class='match'>e<\/span>lse<\/li>\n  <li><span class='match'>e<\/span>mploy<\/li>\n  <li><span class='match'>e<\/span>ncourage<\/li>\n  <li><span class='match'>e<\/span>nd<\/li>\n  <li><span class='match'>e<\/span>ngine<\/li>\n  <li><span class='match'>e<\/span>nglish<\/li>\n  <li><span class='match'>e<\/span>njoy<\/li>\n  <li><span class='match'>e<\/span>nough<\/li>\n  <li><span class='match'>e<\/span>nter<\/li>\n  <li><span class='match'>e<\/span>nvironment<\/li>\n  <li><span class='match'>e<\/span>qual<\/li>\n  <li><span class='match'>e<\/span>special<\/li>\n  <li><span class='match'>e<\/span>urope<\/li>\n  <li><span class='match'>e<\/span>ven<\/li>\n  <li><span class='match'>e<\/span>vening<\/li>\n  <li><span class='match'>e<\/span>ver<\/li>\n  <li><span class='match'>e<\/span>very<\/li>\n  <li><span class='match'>e<\/span>vidence<\/li>\n  <li><span class='match'>e<\/span>xact<\/li>\n  <li><span class='match'>e<\/span>xample<\/li>\n  <li><span class='match'>e<\/span>xcept<\/li>\n  <li><span class='match'>e<\/span>xcuse<\/li>\n  <li><span class='match'>e<\/span>xercise<\/li>\n  <li><span class='match'>e<\/span>xist<\/li>\n  <li><span class='match'>e<\/span>xpect<\/li>\n  <li><span class='match'>e<\/span>xpense<\/li>\n  <li><span class='match'>e<\/span>xperience<\/li>\n  <li><span class='match'>e<\/span>xplain<\/li>\n  <li><span class='match'>e<\/span>xpress<\/li>\n  <li><span class='match'>e<\/span>xtra<\/li>\n  <li><span class='match'>e<\/span>ye<\/li>\n  <li><span class='match'>i<\/span>dea<\/li>\n  <li><span class='match'>i<\/span>dentify<\/li>\n  <li><span class='match'>i<\/span>f<\/li>\n  <li><span class='match'>i<\/span>magine<\/li>\n  <li><span class='match'>i<\/span>mportant<\/li>\n  <li><span class='match'>i<\/span>mprove<\/li>\n  <li><span class='match'>i<\/span>n<\/li>\n  <li><span class='match'>i<\/span>nclude<\/li>\n  <li><span class='match'>i<\/span>ncome<\/li>\n  <li><span class='match'>i<\/span>ncrease<\/li>\n  <li><span class='match'>i<\/span>ndeed<\/li>\n  <li><span class='match'>i<\/span>ndividual<\/li>\n  <li><span class='match'>i<\/span>ndustry<\/li>\n  <li><span class='match'>i<\/span>nform<\/li>\n  <li><span class='match'>i<\/span>nside<\/li>\n  <li><span class='match'>i<\/span>nstead<\/li>\n  <li><span class='match'>i<\/span>nsure<\/li>\n  <li><span class='match'>i<\/span>nterest<\/li>\n  <li><span class='match'>i<\/span>nto<\/li>\n  <li><span class='match'>i<\/span>ntroduce<\/li>\n  <li><span class='match'>i<\/span>nvest<\/li>\n  <li><span class='match'>i<\/span>nvolve<\/li>\n  <li><span class='match'>i<\/span>ssue<\/li>\n  <li><span class='match'>i<\/span>t<\/li>\n  <li><span class='match'>i<\/span>tem<\/li>\n  <li><span class='match'>o<\/span>bvious<\/li>\n  <li><span class='match'>o<\/span>ccasion<\/li>\n  <li><span class='match'>o<\/span>dd<\/li>\n  <li><span class='match'>o<\/span>f<\/li>\n  <li><span class='match'>o<\/span>ff<\/li>\n  <li><span class='match'>o<\/span>ffer<\/li>\n  <li><span class='match'>o<\/span>ffice<\/li>\n  <li><span class='match'>o<\/span>ften<\/li>\n  <li><span class='match'>o<\/span>kay<\/li>\n  <li><span class='match'>o<\/span>ld<\/li>\n  <li><span class='match'>o<\/span>n<\/li>\n  <li><span class='match'>o<\/span>nce<\/li>\n  <li><span class='match'>o<\/span>ne<\/li>\n  <li><span class='match'>o<\/span>nly<\/li>\n  <li><span class='match'>o<\/span>pen<\/li>\n  <li><span class='match'>o<\/span>perate<\/li>\n  <li><span class='match'>o<\/span>pportunity<\/li>\n  <li><span class='match'>o<\/span>ppose<\/li>\n  <li><span class='match'>o<\/span>r<\/li>\n  <li><span class='match'>o<\/span>rder<\/li>\n  <li><span class='match'>o<\/span>rganize<\/li>\n  <li><span class='match'>o<\/span>riginal<\/li>\n  <li><span class='match'>o<\/span>ther<\/li>\n  <li><span class='match'>o<\/span>therwise<\/li>\n  <li><span class='match'>o<\/span>ught<\/li>\n  <li><span class='match'>o<\/span>ut<\/li>\n  <li><span class='match'>o<\/span>ver<\/li>\n  <li><span class='match'>o<\/span>wn<\/li>\n  <li><span class='match'>u<\/span>nder<\/li>\n  <li><span class='match'>u<\/span>nderstand<\/li>\n  <li><span class='match'>u<\/span>nion<\/li>\n  <li><span class='match'>u<\/span>nit<\/li>\n  <li><span class='match'>u<\/span>nite<\/li>\n  <li><span class='match'>u<\/span>niversity<\/li>\n  <li><span class='match'>u<\/span>nless<\/li>\n  <li><span class='match'>u<\/span>ntil<\/li>\n  <li><span class='match'>u<\/span>p<\/li>\n  <li><span class='match'>u<\/span>pon<\/li>\n  <li><span class='match'>u<\/span>se<\/li>\n  <li><span class='match'>u<\/span>sual<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3866498b75332766185c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3866498b75332766185c">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><\/li>\n  <li><span class='match'>a<\/span>ble<\/li>\n  <li><span class='match'>a<\/span>bout<\/li>\n  <li><span class='match'>a<\/span>bsolute<\/li>\n  <li><span class='match'>a<\/span>ccept<\/li>\n  <li><span class='match'>a<\/span>ccount<\/li>\n  <li><span class='match'>a<\/span>chieve<\/li>\n  <li><span class='match'>a<\/span>cross<\/li>\n  <li><span class='match'>a<\/span>ct<\/li>\n  <li><span class='match'>a<\/span>ctive<\/li>\n  <li><span class='match'>a<\/span>ctual<\/li>\n  <li><span class='match'>a<\/span>dd<\/li>\n  <li><span class='match'>a<\/span>ddress<\/li>\n  <li><span class='match'>a<\/span>dmit<\/li>\n  <li><span class='match'>a<\/span>dvertise<\/li>\n  <li><span class='match'>a<\/span>ffect<\/li>\n  <li><span class='match'>a<\/span>fford<\/li>\n  <li><span class='match'>a<\/span>fter<\/li>\n  <li><span class='match'>a<\/span>fternoon<\/li>\n  <li><span class='match'>a<\/span>gain<\/li>\n  <li><span class='match'>a<\/span>gainst<\/li>\n  <li><span class='match'>a<\/span>ge<\/li>\n  <li><span class='match'>a<\/span>gent<\/li>\n  <li><span class='match'>a<\/span>go<\/li>\n  <li><span class='match'>a<\/span>gree<\/li>\n  <li><span class='match'>a<\/span>ir<\/li>\n  <li><span class='match'>a<\/span>ll<\/li>\n  <li><span class='match'>a<\/span>llow<\/li>\n  <li><span class='match'>a<\/span>lmost<\/li>\n  <li><span class='match'>a<\/span>long<\/li>\n  <li><span class='match'>a<\/span>lready<\/li>\n  <li><span class='match'>a<\/span>lright<\/li>\n  <li><span class='match'>a<\/span>lso<\/li>\n  <li><span class='match'>a<\/span>lthough<\/li>\n  <li><span class='match'>a<\/span>lways<\/li>\n  <li><span class='match'>a<\/span>merica<\/li>\n  <li><span class='match'>a<\/span>mount<\/li>\n  <li><span class='match'>a<\/span>nd<\/li>\n  <li><span class='match'>a<\/span>nother<\/li>\n  <li><span class='match'>a<\/span>nswer<\/li>\n  <li><span class='match'>a<\/span>ny<\/li>\n  <li><span class='match'>a<\/span>part<\/li>\n  <li><span class='match'>a<\/span>pparent<\/li>\n  <li><span class='match'>a<\/span>ppear<\/li>\n  <li><span class='match'>a<\/span>pply<\/li>\n  <li><span class='match'>a<\/span>ppoint<\/li>\n  <li><span class='match'>a<\/span>pproach<\/li>\n  <li><span class='match'>a<\/span>ppropriate<\/li>\n  <li><span class='match'>a<\/span>rea<\/li>\n  <li><span class='match'>a<\/span>rgue<\/li>\n  <li><span class='match'>a<\/span>rm<\/li>\n  <li><span class='match'>a<\/span>round<\/li>\n  <li><span class='match'>a<\/span>rrange<\/li>\n  <li><span class='match'>a<\/span>rt<\/li>\n  <li><span class='match'>a<\/span>s<\/li>\n  <li><span class='match'>a<\/span>sk<\/li>\n  <li><span class='match'>a<\/span>ssociate<\/li>\n  <li><span class='match'>a<\/span>ssume<\/li>\n  <li><span class='match'>a<\/span>t<\/li>\n  <li><span class='match'>a<\/span>ttend<\/li>\n  <li><span class='match'>a<\/span>uthority<\/li>\n  <li><span class='match'>a<\/span>vailable<\/li>\n  <li><span class='match'>a<\/span>ware<\/li>\n  <li><span class='match'>a<\/span>way<\/li>\n  <li><span class='match'>a<\/span>wful<\/li>\n  <li><span class='match'>e<\/span>ach<\/li>\n  <li><span class='match'>e<\/span>arly<\/li>\n  <li><span class='match'>e<\/span>ast<\/li>\n  <li><span class='match'>e<\/span>asy<\/li>\n  <li><span class='match'>e<\/span>at<\/li>\n  <li><span class='match'>e<\/span>conomy<\/li>\n  <li><span class='match'>e<\/span>ducate<\/li>\n  <li><span class='match'>e<\/span>ffect<\/li>\n  <li><span class='match'>e<\/span>gg<\/li>\n  <li><span class='match'>e<\/span>ight<\/li>\n  <li><span class='match'>e<\/span>ither<\/li>\n  <li><span class='match'>e<\/span>lect<\/li>\n  <li><span class='match'>e<\/span>lectric<\/li>\n  <li><span class='match'>e<\/span>leven<\/li>\n  <li><span class='match'>e<\/span>lse<\/li>\n  <li><span class='match'>e<\/span>mploy<\/li>\n  <li><span class='match'>e<\/span>ncourage<\/li>\n  <li><span class='match'>e<\/span>nd<\/li>\n  <li><span class='match'>e<\/span>ngine<\/li>\n  <li><span class='match'>e<\/span>nglish<\/li>\n  <li><span class='match'>e<\/span>njoy<\/li>\n  <li><span class='match'>e<\/span>nough<\/li>\n  <li><span class='match'>e<\/span>nter<\/li>\n  <li><span class='match'>e<\/span>nvironment<\/li>\n  <li><span class='match'>e<\/span>qual<\/li>\n  <li><span class='match'>e<\/span>special<\/li>\n  <li><span class='match'>e<\/span>urope<\/li>\n  <li><span class='match'>e<\/span>ven<\/li>\n  <li><span class='match'>e<\/span>vening<\/li>\n  <li><span class='match'>e<\/span>ver<\/li>\n  <li><span class='match'>e<\/span>very<\/li>\n  <li><span class='match'>e<\/span>vidence<\/li>\n  <li><span class='match'>e<\/span>xact<\/li>\n  <li><span class='match'>e<\/span>xample<\/li>\n  <li><span class='match'>e<\/span>xcept<\/li>\n  <li><span class='match'>e<\/span>xcuse<\/li>\n  <li><span class='match'>e<\/span>xercise<\/li>\n  <li><span class='match'>e<\/span>xist<\/li>\n  <li><span class='match'>e<\/span>xpect<\/li>\n  <li><span class='match'>e<\/span>xpense<\/li>\n  <li><span class='match'>e<\/span>xperience<\/li>\n  <li><span class='match'>e<\/span>xplain<\/li>\n  <li><span class='match'>e<\/span>xpress<\/li>\n  <li><span class='match'>e<\/span>xtra<\/li>\n  <li><span class='match'>e<\/span>ye<\/li>\n  <li><span class='match'>i<\/span>dea<\/li>\n  <li><span class='match'>i<\/span>dentify<\/li>\n  <li><span class='match'>i<\/span>f<\/li>\n  <li><span class='match'>i<\/span>magine<\/li>\n  <li><span class='match'>i<\/span>mportant<\/li>\n  <li><span class='match'>i<\/span>mprove<\/li>\n  <li><span class='match'>i<\/span>n<\/li>\n  <li><span class='match'>i<\/span>nclude<\/li>\n  <li><span class='match'>i<\/span>ncome<\/li>\n  <li><span class='match'>i<\/span>ncrease<\/li>\n  <li><span class='match'>i<\/span>ndeed<\/li>\n  <li><span class='match'>i<\/span>ndividual<\/li>\n  <li><span class='match'>i<\/span>ndustry<\/li>\n  <li><span class='match'>i<\/span>nform<\/li>\n  <li><span class='match'>i<\/span>nside<\/li>\n  <li><span class='match'>i<\/span>nstead<\/li>\n  <li><span class='match'>i<\/span>nsure<\/li>\n  <li><span class='match'>i<\/span>nterest<\/li>\n  <li><span class='match'>i<\/span>nto<\/li>\n  <li><span class='match'>i<\/span>ntroduce<\/li>\n  <li><span class='match'>i<\/span>nvest<\/li>\n  <li><span class='match'>i<\/span>nvolve<\/li>\n  <li><span class='match'>i<\/span>ssue<\/li>\n  <li><span class='match'>i<\/span>t<\/li>\n  <li><span class='match'>i<\/span>tem<\/li>\n  <li><span class='match'>o<\/span>bvious<\/li>\n  <li><span class='match'>o<\/span>ccasion<\/li>\n  <li><span class='match'>o<\/span>dd<\/li>\n  <li><span class='match'>o<\/span>f<\/li>\n  <li><span class='match'>o<\/span>ff<\/li>\n  <li><span class='match'>o<\/span>ffer<\/li>\n  <li><span class='match'>o<\/span>ffice<\/li>\n  <li><span class='match'>o<\/span>ften<\/li>\n  <li><span class='match'>o<\/span>kay<\/li>\n  <li><span class='match'>o<\/span>ld<\/li>\n  <li><span class='match'>o<\/span>n<\/li>\n  <li><span class='match'>o<\/span>nce<\/li>\n  <li><span class='match'>o<\/span>ne<\/li>\n  <li><span class='match'>o<\/span>nly<\/li>\n  <li><span class='match'>o<\/span>pen<\/li>\n  <li><span class='match'>o<\/span>perate<\/li>\n  <li><span class='match'>o<\/span>pportunity<\/li>\n  <li><span class='match'>o<\/span>ppose<\/li>\n  <li><span class='match'>o<\/span>r<\/li>\n  <li><span class='match'>o<\/span>rder<\/li>\n  <li><span class='match'>o<\/span>rganize<\/li>\n  <li><span class='match'>o<\/span>riginal<\/li>\n  <li><span class='match'>o<\/span>ther<\/li>\n  <li><span class='match'>o<\/span>therwise<\/li>\n  <li><span class='match'>o<\/span>ught<\/li>\n  <li><span class='match'>o<\/span>ut<\/li>\n  <li><span class='match'>o<\/span>ver<\/li>\n  <li><span class='match'>o<\/span>wn<\/li>\n  <li><span class='match'>u<\/span>nder<\/li>\n  <li><span class='match'>u<\/span>nderstand<\/li>\n  <li><span class='match'>u<\/span>nion<\/li>\n  <li><span class='match'>u<\/span>nit<\/li>\n  <li><span class='match'>u<\/span>nite<\/li>\n  <li><span class='match'>u<\/span>niversity<\/li>\n  <li><span class='match'>u<\/span>nless<\/li>\n  <li><span class='match'>u<\/span>ntil<\/li>\n  <li><span class='match'>u<\/span>p<\/li>\n  <li><span class='match'>u<\/span>pon<\/li>\n  <li><span class='match'>u<\/span>se<\/li>\n  <li><span class='match'>u<\/span>sual<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>That only contain consonants. (Hint: thinking about matching “not”-vowels.)</p>
 <pre class="r"><code>str_view(stringr::words, &quot;[aeiou]&quot;, match=FALSE)</code></pre>
-<div id="htmlwidget-db4d12ead79f26f102f5" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-db4d12ead79f26f102f5">{"x":{"html":"<ul>\n  <li>by<\/li>\n  <li>dry<\/li>\n  <li>fly<\/li>\n  <li>mrs<\/li>\n  <li>try<\/li>\n  <li>why<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6f39f7c8a986b81768f6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6f39f7c8a986b81768f6">{"x":{"html":"<ul>\n  <li>by<\/li>\n  <li>dry<\/li>\n  <li>fly<\/li>\n  <li>mrs<\/li>\n  <li>try<\/li>\n  <li>why<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>End with ed, but not with eed.</p>
 <pre class="r"><code>str_view(stringr::words, &quot;[^e]ed$&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-c27099e2cec1bd86b088" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c27099e2cec1bd86b088">{"x":{"html":"<ul>\n  <li><span class='match'>bed<\/span><\/li>\n  <li>hund<span class='match'>red<\/span><\/li>\n  <li><span class='match'>red<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3a117aaf1cabab88da87" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3a117aaf1cabab88da87">{"x":{"html":"<ul>\n  <li><span class='match'>bed<\/span><\/li>\n  <li>hund<span class='match'>red<\/span><\/li>\n  <li><span class='match'>red<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(c(&quot;ed&quot;, stringr::words), &quot;(^|[^e])ed$&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-cd04c6402cfafdeda877" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cd04c6402cfafdeda877">{"x":{"html":"<ul>\n  <li><span class='match'>ed<\/span><\/li>\n  <li><span class='match'>bed<\/span><\/li>\n  <li>hund<span class='match'>red<\/span><\/li>\n  <li><span class='match'>red<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3836fee888516dc289d8" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3836fee888516dc289d8">{"x":{"html":"<ul>\n  <li><span class='match'>ed<\/span><\/li>\n  <li><span class='match'>bed<\/span><\/li>\n  <li>hund<span class='match'>red<\/span><\/li>\n  <li><span class='match'>red<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>End with ing or ise.</p>
 <pre class="r"><code>str_view(stringr::words, &quot;(ing|ise)$&quot;, match=TRUE)</code></pre>
-<div id="htmlwidget-2df37e243c126439a2f6" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2df37e243c126439a2f6">{"x":{"html":"<ul>\n  <li>advert<span class='match'>ise<\/span><\/li>\n  <li>br<span class='match'>ing<\/span><\/li>\n  <li>dur<span class='match'>ing<\/span><\/li>\n  <li>even<span class='match'>ing<\/span><\/li>\n  <li>exerc<span class='match'>ise<\/span><\/li>\n  <li>k<span class='match'>ing<\/span><\/li>\n  <li>mean<span class='match'>ing<\/span><\/li>\n  <li>morn<span class='match'>ing<\/span><\/li>\n  <li>otherw<span class='match'>ise<\/span><\/li>\n  <li>pract<span class='match'>ise<\/span><\/li>\n  <li>ra<span class='match'>ise<\/span><\/li>\n  <li>real<span class='match'>ise<\/span><\/li>\n  <li>r<span class='match'>ing<\/span><\/li>\n  <li>r<span class='match'>ise<\/span><\/li>\n  <li>s<span class='match'>ing<\/span><\/li>\n  <li>surpr<span class='match'>ise<\/span><\/li>\n  <li>th<span class='match'>ing<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b81e0b114b5c63797bc4" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b81e0b114b5c63797bc4">{"x":{"html":"<ul>\n  <li>advert<span class='match'>ise<\/span><\/li>\n  <li>br<span class='match'>ing<\/span><\/li>\n  <li>dur<span class='match'>ing<\/span><\/li>\n  <li>even<span class='match'>ing<\/span><\/li>\n  <li>exerc<span class='match'>ise<\/span><\/li>\n  <li>k<span class='match'>ing<\/span><\/li>\n  <li>mean<span class='match'>ing<\/span><\/li>\n  <li>morn<span class='match'>ing<\/span><\/li>\n  <li>otherw<span class='match'>ise<\/span><\/li>\n  <li>pract<span class='match'>ise<\/span><\/li>\n  <li>ra<span class='match'>ise<\/span><\/li>\n  <li>real<span class='match'>ise<\/span><\/li>\n  <li>r<span class='match'>ing<\/span><\/li>\n  <li>r<span class='match'>ise<\/span><\/li>\n  <li>s<span class='match'>ing<\/span><\/li>\n  <li>surpr<span class='match'>ise<\/span><\/li>\n  <li>th<span class='match'>ing<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Is “q” always followed by a “u”?</p>
 <pre class="r"><code>str_view(stringr::words, &quot;q[^u]&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-7265dc6c140e5885310c" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7265dc6c140e5885310c">{"x":{"html":"<ul>\n  <li><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f2127a9ea07dbfd6eb6f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f2127a9ea07dbfd6eb6f">{"x":{"html":"<ul>\n  <li><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="repetition" class="section level3">
@@ -1581,30 +1581,30 @@ str_view(x, &quot;gr(e|a)y&quot;)</code></pre>
 <p>?: 0 or 1 +: 1 or more *: 0 or more</p>
 <pre class="r"><code>x &lt;- &quot;1888 is the longest year in Roman numerals: MDCCCLXXXVIII&quot;
 str_view(x, &quot;CC?&quot;)</code></pre>
-<div id="htmlwidget-3179807fb6164fe4875a" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3179807fb6164fe4875a">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fba07d9d638fadb99658" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fba07d9d638fadb99658">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(x, &quot;CC+&quot;)</code></pre>
-<div id="htmlwidget-b757b8f19575d1af743a" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b757b8f19575d1af743a">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CCC<\/span>LXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-498c42ab48afb511de5d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-498c42ab48afb511de5d">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CCC<\/span>LXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(x, &#39;C[LX]+&#39;)</code></pre>
-<div id="htmlwidget-c67a2a015d33932d1aa1" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c67a2a015d33932d1aa1">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MDCC<span class='match'>CLXXX<\/span>VIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-94fe2d2d5ad2b2a8d2c1" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-94fe2d2d5ad2b2a8d2c1">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MDCC<span class='match'>CLXXX<\/span>VIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Note that the precedence of these operators is high, so you can write: colou?r to match either American or British spellings. That means most uses will need parentheses, like bana(na)+</p>
 <p>You can also specify the number of matches precisely:</p>
 <p>{n}: exactly n {n,}: n or more {,m}: at most m {n,m}: between n and m</p>
 <pre class="r"><code>str_view(x, &quot;C{2}&quot;)</code></pre>
-<div id="htmlwidget-1062ecccdf1051943b45" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1062ecccdf1051943b45">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-997925edce4840419b10" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-997925edce4840419b10">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(x, &quot;C{2,}&quot;)</code></pre>
-<div id="htmlwidget-999aaf57f5361b4b9303" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-999aaf57f5361b4b9303">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CCC<\/span>LXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-50f8d3d2e73ec1f8b386" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-50f8d3d2e73ec1f8b386">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CCC<\/span>LXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>By default these matches are “greedy”: they will match the longest string possible. You can make them “lazy”, matching the shortest string possible by putting a ? after them. This is an advanced feature of regular expressions, but it’s useful to know that it exists:</p>
 <pre class="r"><code>str_view(x, &#39;C{2,3}?&#39;)</code></pre>
-<div id="htmlwidget-44a3bfd1d99f79393337" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-44a3bfd1d99f79393337">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-38676f683393b86162df" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-38676f683393b86162df">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MD<span class='match'>CC<\/span>CLXXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_view(x, &#39;C[LX]+?&#39;)</code></pre>
-<div id="htmlwidget-a2870fecfc57ba391b33" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a2870fecfc57ba391b33">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MDCC<span class='match'>CL<\/span>XXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6858325f2c5ce298cfc1" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6858325f2c5ce298cfc1">{"x":{"html":"<ul>\n  <li>1888 is the longest year in Roman numerals: MDCC<span class='match'>CL<\/span>XXXVIII<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <div id="exercises-3" class="section level4">
 <h4>14.3.4.1 Exercises</h4>
 <ol style="list-style-type: decimal">
@@ -1620,16 +1620,16 @@ str_view(x, &quot;CC?&quot;)</code></pre>
 </ol>
 <p>Start with three consonants.</p>
 <pre class="r"><code>str_view(stringr::words, &quot;^[^aeiou]{3}&quot;, match=TRUE)</code></pre>
-<div id="htmlwidget-89a2ff2d65bf2cf073bf" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-89a2ff2d65bf2cf073bf">{"x":{"html":"<ul>\n  <li><span class='match'>Chr<\/span>ist<\/li>\n  <li><span class='match'>Chr<\/span>istmas<\/li>\n  <li><span class='match'>dry<\/span><\/li>\n  <li><span class='match'>fly<\/span><\/li>\n  <li><span class='match'>mrs<\/span><\/li>\n  <li><span class='match'>sch<\/span>eme<\/li>\n  <li><span class='match'>sch<\/span>ool<\/li>\n  <li><span class='match'>str<\/span>aight<\/li>\n  <li><span class='match'>str<\/span>ategy<\/li>\n  <li><span class='match'>str<\/span>eet<\/li>\n  <li><span class='match'>str<\/span>ike<\/li>\n  <li><span class='match'>str<\/span>ong<\/li>\n  <li><span class='match'>str<\/span>ucture<\/li>\n  <li><span class='match'>sys<\/span>tem<\/li>\n  <li><span class='match'>thr<\/span>ee<\/li>\n  <li><span class='match'>thr<\/span>ough<\/li>\n  <li><span class='match'>thr<\/span>ow<\/li>\n  <li><span class='match'>try<\/span><\/li>\n  <li><span class='match'>typ<\/span>e<\/li>\n  <li><span class='match'>why<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6c3e58c23bb24ea84249" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6c3e58c23bb24ea84249">{"x":{"html":"<ul>\n  <li><span class='match'>Chr<\/span>ist<\/li>\n  <li><span class='match'>Chr<\/span>istmas<\/li>\n  <li><span class='match'>dry<\/span><\/li>\n  <li><span class='match'>fly<\/span><\/li>\n  <li><span class='match'>mrs<\/span><\/li>\n  <li><span class='match'>sch<\/span>eme<\/li>\n  <li><span class='match'>sch<\/span>ool<\/li>\n  <li><span class='match'>str<\/span>aight<\/li>\n  <li><span class='match'>str<\/span>ategy<\/li>\n  <li><span class='match'>str<\/span>eet<\/li>\n  <li><span class='match'>str<\/span>ike<\/li>\n  <li><span class='match'>str<\/span>ong<\/li>\n  <li><span class='match'>str<\/span>ucture<\/li>\n  <li><span class='match'>sys<\/span>tem<\/li>\n  <li><span class='match'>thr<\/span>ee<\/li>\n  <li><span class='match'>thr<\/span>ough<\/li>\n  <li><span class='match'>thr<\/span>ow<\/li>\n  <li><span class='match'>try<\/span><\/li>\n  <li><span class='match'>typ<\/span>e<\/li>\n  <li><span class='match'>why<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Have three or more vowels in a row.</p>
 <pre class="r"><code>str_view(stringr::words, &quot;[aeiou]{3,}&quot;, match=TRUE)</code></pre>
-<div id="htmlwidget-a13b68fddfe0016d39ad" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a13b68fddfe0016d39ad">{"x":{"html":"<ul>\n  <li>b<span class='match'>eau<\/span>ty<\/li>\n  <li>obv<span class='match'>iou<\/span>s<\/li>\n  <li>prev<span class='match'>iou<\/span>s<\/li>\n  <li>q<span class='match'>uie<\/span>t<\/li>\n  <li>ser<span class='match'>iou<\/span>s<\/li>\n  <li>var<span class='match'>iou<\/span>s<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5ddd67bd57c913b31fbc" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5ddd67bd57c913b31fbc">{"x":{"html":"<ul>\n  <li>b<span class='match'>eau<\/span>ty<\/li>\n  <li>obv<span class='match'>iou<\/span>s<\/li>\n  <li>prev<span class='match'>iou<\/span>s<\/li>\n  <li>q<span class='match'>uie<\/span>t<\/li>\n  <li>ser<span class='match'>iou<\/span>s<\/li>\n  <li>var<span class='match'>iou<\/span>s<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Have two or more vowel-consonant pairs in a row.</p>
 <pre class="r"><code>str_view(stringr::words, &quot;([aeiou][^aeiou]){2,}&quot;, match=TRUE)</code></pre>
-<div id="htmlwidget-12a8b7a83ec663106fbf" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-12a8b7a83ec663106fbf">{"x":{"html":"<ul>\n  <li>abs<span class='match'>olut<\/span>e<\/li>\n  <li><span class='match'>agen<\/span>t<\/li>\n  <li><span class='match'>alon<\/span>g<\/li>\n  <li><span class='match'>americ<\/span>a<\/li>\n  <li><span class='match'>anot<\/span>her<\/li>\n  <li><span class='match'>apar<\/span>t<\/li>\n  <li>app<span class='match'>aren<\/span>t<\/li>\n  <li>auth<span class='match'>orit<\/span>y<\/li>\n  <li>ava<span class='match'>ilab<\/span>le<\/li>\n  <li><span class='match'>awar<\/span>e<\/li>\n  <li><span class='match'>away<\/span><\/li>\n  <li>b<span class='match'>alan<\/span>ce<\/li>\n  <li>b<span class='match'>asis<\/span><\/li>\n  <li>b<span class='match'>ecom<\/span>e<\/li>\n  <li>b<span class='match'>efor<\/span>e<\/li>\n  <li>b<span class='match'>egin<\/span><\/li>\n  <li>b<span class='match'>ehin<\/span>d<\/li>\n  <li>b<span class='match'>enefit<\/span><\/li>\n  <li>b<span class='match'>usines<\/span>s<\/li>\n  <li>ch<span class='match'>arac<\/span>ter<\/li>\n  <li>cl<span class='match'>oses<\/span><\/li>\n  <li>comm<span class='match'>unit<\/span>y<\/li>\n  <li>cons<span class='match'>ider<\/span><\/li>\n  <li>c<span class='match'>over<\/span><\/li>\n  <li>d<span class='match'>ebat<\/span>e<\/li>\n  <li>d<span class='match'>ecid<\/span>e<\/li>\n  <li>d<span class='match'>ecis<\/span>ion<\/li>\n  <li>d<span class='match'>efinit<\/span>e<\/li>\n  <li>d<span class='match'>epar<\/span>tment<\/li>\n  <li>d<span class='match'>epen<\/span>d<\/li>\n  <li>d<span class='match'>esig<\/span>n<\/li>\n  <li>d<span class='match'>evelop<\/span><\/li>\n  <li>diff<span class='match'>eren<\/span>ce<\/li>\n  <li>diff<span class='match'>icul<\/span>t<\/li>\n  <li>d<span class='match'>irec<\/span>t<\/li>\n  <li>d<span class='match'>ivid<\/span>e<\/li>\n  <li>d<span class='match'>ocumen<\/span>t<\/li>\n  <li>d<span class='match'>urin<\/span>g<\/li>\n  <li><span class='match'>econom<\/span>y<\/li>\n  <li><span class='match'>educat<\/span>e<\/li>\n  <li><span class='match'>elec<\/span>t<\/li>\n  <li><span class='match'>elec<\/span>tric<\/li>\n  <li><span class='match'>eleven<\/span><\/li>\n  <li>enco<span class='match'>urag<\/span>e<\/li>\n  <li>env<span class='match'>iron<\/span>ment<\/li>\n  <li>e<span class='match'>urop<\/span>e<\/li>\n  <li><span class='match'>even<\/span><\/li>\n  <li><span class='match'>evenin<\/span>g<\/li>\n  <li><span class='match'>ever<\/span><\/li>\n  <li><span class='match'>ever<\/span>y<\/li>\n  <li><span class='match'>eviden<\/span>ce<\/li>\n  <li><span class='match'>exac<\/span>t<\/li>\n  <li><span class='match'>exam<\/span>ple<\/li>\n  <li><span class='match'>exer<\/span>cise<\/li>\n  <li><span class='match'>exis<\/span>t<\/li>\n  <li>f<span class='match'>amil<\/span>y<\/li>\n  <li>f<span class='match'>igur<\/span>e<\/li>\n  <li>f<span class='match'>inal<\/span><\/li>\n  <li>f<span class='match'>inan<\/span>ce<\/li>\n  <li>f<span class='match'>inis<\/span>h<\/li>\n  <li>fr<span class='match'>iday<\/span><\/li>\n  <li>f<span class='match'>utur<\/span>e<\/li>\n  <li>g<span class='match'>eneral<\/span><\/li>\n  <li>g<span class='match'>over<\/span>n<\/li>\n  <li>h<span class='match'>oliday<\/span><\/li>\n  <li>h<span class='match'>ones<\/span>t<\/li>\n  <li>hosp<span class='match'>ital<\/span><\/li>\n  <li>h<span class='match'>owever<\/span><\/li>\n  <li><span class='match'>iden<\/span>tify<\/li>\n  <li><span class='match'>imagin<\/span>e<\/li>\n  <li>ind<span class='match'>ivid<\/span>ual<\/li>\n  <li>int<span class='match'>eres<\/span>t<\/li>\n  <li>intr<span class='match'>oduc<\/span>e<\/li>\n  <li><span class='match'>item<\/span><\/li>\n  <li>j<span class='match'>esus<\/span><\/li>\n  <li>l<span class='match'>evel<\/span><\/li>\n  <li>l<span class='match'>ikel<\/span>y<\/li>\n  <li>l<span class='match'>imit<\/span><\/li>\n  <li>l<span class='match'>ocal<\/span><\/li>\n  <li>m<span class='match'>ajor<\/span><\/li>\n  <li>m<span class='match'>anag<\/span>e<\/li>\n  <li>me<span class='match'>anin<\/span>g<\/li>\n  <li>me<span class='match'>asur<\/span>e<\/li>\n  <li>m<span class='match'>inis<\/span>ter<\/li>\n  <li>m<span class='match'>inus<\/span><\/li>\n  <li>m<span class='match'>inut<\/span>e<\/li>\n  <li>m<span class='match'>omen<\/span>t<\/li>\n  <li>m<span class='match'>oney<\/span><\/li>\n  <li>m<span class='match'>usic<\/span><\/li>\n  <li>n<span class='match'>atur<\/span>e<\/li>\n  <li>n<span class='match'>eces<\/span>sary<\/li>\n  <li>n<span class='match'>ever<\/span><\/li>\n  <li>n<span class='match'>otic<\/span>e<\/li>\n  <li><span class='match'>okay<\/span><\/li>\n  <li><span class='match'>open<\/span><\/li>\n  <li><span class='match'>operat<\/span>e<\/li>\n  <li>opport<span class='match'>unit<\/span>y<\/li>\n  <li>org<span class='match'>aniz<\/span>e<\/li>\n  <li><span class='match'>original<\/span><\/li>\n  <li><span class='match'>over<\/span><\/li>\n  <li>p<span class='match'>aper<\/span><\/li>\n  <li>p<span class='match'>arag<\/span>raph<\/li>\n  <li>p<span class='match'>aren<\/span>t<\/li>\n  <li>part<span class='match'>icular<\/span><\/li>\n  <li>ph<span class='match'>otog<\/span>raph<\/li>\n  <li>p<span class='match'>olic<\/span>e<\/li>\n  <li>p<span class='match'>olic<\/span>y<\/li>\n  <li>p<span class='match'>olitic<\/span><\/li>\n  <li>p<span class='match'>osit<\/span>ion<\/li>\n  <li>p<span class='match'>ositiv<\/span>e<\/li>\n  <li>p<span class='match'>ower<\/span><\/li>\n  <li>pr<span class='match'>epar<\/span>e<\/li>\n  <li>pr<span class='match'>esen<\/span>t<\/li>\n  <li>pr<span class='match'>esum<\/span>e<\/li>\n  <li>pr<span class='match'>ivat<\/span>e<\/li>\n  <li>pr<span class='match'>obab<\/span>le<\/li>\n  <li>pr<span class='match'>oces<\/span>s<\/li>\n  <li>pr<span class='match'>oduc<\/span>e<\/li>\n  <li>pr<span class='match'>oduc<\/span>t<\/li>\n  <li>pr<span class='match'>ojec<\/span>t<\/li>\n  <li>pr<span class='match'>oper<\/span><\/li>\n  <li>pr<span class='match'>opos<\/span>e<\/li>\n  <li>pr<span class='match'>otec<\/span>t<\/li>\n  <li>pr<span class='match'>ovid<\/span>e<\/li>\n  <li>qu<span class='match'>alit<\/span>y<\/li>\n  <li>re<span class='match'>alis<\/span>e<\/li>\n  <li>re<span class='match'>ason<\/span><\/li>\n  <li>r<span class='match'>ecen<\/span>t<\/li>\n  <li>r<span class='match'>ecog<\/span>nize<\/li>\n  <li>r<span class='match'>ecom<\/span>mend<\/li>\n  <li>r<span class='match'>ecor<\/span>d<\/li>\n  <li>r<span class='match'>educ<\/span>e<\/li>\n  <li>r<span class='match'>efer<\/span><\/li>\n  <li>r<span class='match'>egar<\/span>d<\/li>\n  <li>r<span class='match'>elat<\/span>ion<\/li>\n  <li>r<span class='match'>emem<\/span>ber<\/li>\n  <li>r<span class='match'>epor<\/span>t<\/li>\n  <li>repr<span class='match'>esen<\/span>t<\/li>\n  <li>r<span class='match'>esul<\/span>t<\/li>\n  <li>r<span class='match'>etur<\/span>n<\/li>\n  <li>s<span class='match'>atur<\/span>day<\/li>\n  <li>s<span class='match'>econ<\/span>d<\/li>\n  <li>secr<span class='match'>etar<\/span>y<\/li>\n  <li>s<span class='match'>ecur<\/span>e<\/li>\n  <li>s<span class='match'>eparat<\/span>e<\/li>\n  <li>s<span class='match'>even<\/span><\/li>\n  <li>s<span class='match'>imilar<\/span><\/li>\n  <li>sp<span class='match'>ecific<\/span><\/li>\n  <li>str<span class='match'>ateg<\/span>y<\/li>\n  <li>st<span class='match'>uden<\/span>t<\/li>\n  <li>st<span class='match'>upid<\/span><\/li>\n  <li>t<span class='match'>elep<\/span>hone<\/li>\n  <li>t<span class='match'>elevis<\/span>ion<\/li>\n  <li>th<span class='match'>erefor<\/span>e<\/li>\n  <li>tho<span class='match'>usan<\/span>d<\/li>\n  <li>t<span class='match'>oday<\/span><\/li>\n  <li>t<span class='match'>oget<\/span>her<\/li>\n  <li>t<span class='match'>omor<\/span>row<\/li>\n  <li>t<span class='match'>onig<\/span>ht<\/li>\n  <li>t<span class='match'>otal<\/span><\/li>\n  <li>t<span class='match'>owar<\/span>d<\/li>\n  <li>tr<span class='match'>avel<\/span><\/li>\n  <li><span class='match'>unit<\/span><\/li>\n  <li><span class='match'>unit<\/span>e<\/li>\n  <li><span class='match'>univer<\/span>sity<\/li>\n  <li><span class='match'>upon<\/span><\/li>\n  <li>v<span class='match'>isit<\/span><\/li>\n  <li>w<span class='match'>ater<\/span><\/li>\n  <li>w<span class='match'>oman<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f8fb0f130397590f4d05" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f8fb0f130397590f4d05">{"x":{"html":"<ul>\n  <li>abs<span class='match'>olut<\/span>e<\/li>\n  <li><span class='match'>agen<\/span>t<\/li>\n  <li><span class='match'>alon<\/span>g<\/li>\n  <li><span class='match'>americ<\/span>a<\/li>\n  <li><span class='match'>anot<\/span>her<\/li>\n  <li><span class='match'>apar<\/span>t<\/li>\n  <li>app<span class='match'>aren<\/span>t<\/li>\n  <li>auth<span class='match'>orit<\/span>y<\/li>\n  <li>ava<span class='match'>ilab<\/span>le<\/li>\n  <li><span class='match'>awar<\/span>e<\/li>\n  <li><span class='match'>away<\/span><\/li>\n  <li>b<span class='match'>alan<\/span>ce<\/li>\n  <li>b<span class='match'>asis<\/span><\/li>\n  <li>b<span class='match'>ecom<\/span>e<\/li>\n  <li>b<span class='match'>efor<\/span>e<\/li>\n  <li>b<span class='match'>egin<\/span><\/li>\n  <li>b<span class='match'>ehin<\/span>d<\/li>\n  <li>b<span class='match'>enefit<\/span><\/li>\n  <li>b<span class='match'>usines<\/span>s<\/li>\n  <li>ch<span class='match'>arac<\/span>ter<\/li>\n  <li>cl<span class='match'>oses<\/span><\/li>\n  <li>comm<span class='match'>unit<\/span>y<\/li>\n  <li>cons<span class='match'>ider<\/span><\/li>\n  <li>c<span class='match'>over<\/span><\/li>\n  <li>d<span class='match'>ebat<\/span>e<\/li>\n  <li>d<span class='match'>ecid<\/span>e<\/li>\n  <li>d<span class='match'>ecis<\/span>ion<\/li>\n  <li>d<span class='match'>efinit<\/span>e<\/li>\n  <li>d<span class='match'>epar<\/span>tment<\/li>\n  <li>d<span class='match'>epen<\/span>d<\/li>\n  <li>d<span class='match'>esig<\/span>n<\/li>\n  <li>d<span class='match'>evelop<\/span><\/li>\n  <li>diff<span class='match'>eren<\/span>ce<\/li>\n  <li>diff<span class='match'>icul<\/span>t<\/li>\n  <li>d<span class='match'>irec<\/span>t<\/li>\n  <li>d<span class='match'>ivid<\/span>e<\/li>\n  <li>d<span class='match'>ocumen<\/span>t<\/li>\n  <li>d<span class='match'>urin<\/span>g<\/li>\n  <li><span class='match'>econom<\/span>y<\/li>\n  <li><span class='match'>educat<\/span>e<\/li>\n  <li><span class='match'>elec<\/span>t<\/li>\n  <li><span class='match'>elec<\/span>tric<\/li>\n  <li><span class='match'>eleven<\/span><\/li>\n  <li>enco<span class='match'>urag<\/span>e<\/li>\n  <li>env<span class='match'>iron<\/span>ment<\/li>\n  <li>e<span class='match'>urop<\/span>e<\/li>\n  <li><span class='match'>even<\/span><\/li>\n  <li><span class='match'>evenin<\/span>g<\/li>\n  <li><span class='match'>ever<\/span><\/li>\n  <li><span class='match'>ever<\/span>y<\/li>\n  <li><span class='match'>eviden<\/span>ce<\/li>\n  <li><span class='match'>exac<\/span>t<\/li>\n  <li><span class='match'>exam<\/span>ple<\/li>\n  <li><span class='match'>exer<\/span>cise<\/li>\n  <li><span class='match'>exis<\/span>t<\/li>\n  <li>f<span class='match'>amil<\/span>y<\/li>\n  <li>f<span class='match'>igur<\/span>e<\/li>\n  <li>f<span class='match'>inal<\/span><\/li>\n  <li>f<span class='match'>inan<\/span>ce<\/li>\n  <li>f<span class='match'>inis<\/span>h<\/li>\n  <li>fr<span class='match'>iday<\/span><\/li>\n  <li>f<span class='match'>utur<\/span>e<\/li>\n  <li>g<span class='match'>eneral<\/span><\/li>\n  <li>g<span class='match'>over<\/span>n<\/li>\n  <li>h<span class='match'>oliday<\/span><\/li>\n  <li>h<span class='match'>ones<\/span>t<\/li>\n  <li>hosp<span class='match'>ital<\/span><\/li>\n  <li>h<span class='match'>owever<\/span><\/li>\n  <li><span class='match'>iden<\/span>tify<\/li>\n  <li><span class='match'>imagin<\/span>e<\/li>\n  <li>ind<span class='match'>ivid<\/span>ual<\/li>\n  <li>int<span class='match'>eres<\/span>t<\/li>\n  <li>intr<span class='match'>oduc<\/span>e<\/li>\n  <li><span class='match'>item<\/span><\/li>\n  <li>j<span class='match'>esus<\/span><\/li>\n  <li>l<span class='match'>evel<\/span><\/li>\n  <li>l<span class='match'>ikel<\/span>y<\/li>\n  <li>l<span class='match'>imit<\/span><\/li>\n  <li>l<span class='match'>ocal<\/span><\/li>\n  <li>m<span class='match'>ajor<\/span><\/li>\n  <li>m<span class='match'>anag<\/span>e<\/li>\n  <li>me<span class='match'>anin<\/span>g<\/li>\n  <li>me<span class='match'>asur<\/span>e<\/li>\n  <li>m<span class='match'>inis<\/span>ter<\/li>\n  <li>m<span class='match'>inus<\/span><\/li>\n  <li>m<span class='match'>inut<\/span>e<\/li>\n  <li>m<span class='match'>omen<\/span>t<\/li>\n  <li>m<span class='match'>oney<\/span><\/li>\n  <li>m<span class='match'>usic<\/span><\/li>\n  <li>n<span class='match'>atur<\/span>e<\/li>\n  <li>n<span class='match'>eces<\/span>sary<\/li>\n  <li>n<span class='match'>ever<\/span><\/li>\n  <li>n<span class='match'>otic<\/span>e<\/li>\n  <li><span class='match'>okay<\/span><\/li>\n  <li><span class='match'>open<\/span><\/li>\n  <li><span class='match'>operat<\/span>e<\/li>\n  <li>opport<span class='match'>unit<\/span>y<\/li>\n  <li>org<span class='match'>aniz<\/span>e<\/li>\n  <li><span class='match'>original<\/span><\/li>\n  <li><span class='match'>over<\/span><\/li>\n  <li>p<span class='match'>aper<\/span><\/li>\n  <li>p<span class='match'>arag<\/span>raph<\/li>\n  <li>p<span class='match'>aren<\/span>t<\/li>\n  <li>part<span class='match'>icular<\/span><\/li>\n  <li>ph<span class='match'>otog<\/span>raph<\/li>\n  <li>p<span class='match'>olic<\/span>e<\/li>\n  <li>p<span class='match'>olic<\/span>y<\/li>\n  <li>p<span class='match'>olitic<\/span><\/li>\n  <li>p<span class='match'>osit<\/span>ion<\/li>\n  <li>p<span class='match'>ositiv<\/span>e<\/li>\n  <li>p<span class='match'>ower<\/span><\/li>\n  <li>pr<span class='match'>epar<\/span>e<\/li>\n  <li>pr<span class='match'>esen<\/span>t<\/li>\n  <li>pr<span class='match'>esum<\/span>e<\/li>\n  <li>pr<span class='match'>ivat<\/span>e<\/li>\n  <li>pr<span class='match'>obab<\/span>le<\/li>\n  <li>pr<span class='match'>oces<\/span>s<\/li>\n  <li>pr<span class='match'>oduc<\/span>e<\/li>\n  <li>pr<span class='match'>oduc<\/span>t<\/li>\n  <li>pr<span class='match'>ojec<\/span>t<\/li>\n  <li>pr<span class='match'>oper<\/span><\/li>\n  <li>pr<span class='match'>opos<\/span>e<\/li>\n  <li>pr<span class='match'>otec<\/span>t<\/li>\n  <li>pr<span class='match'>ovid<\/span>e<\/li>\n  <li>qu<span class='match'>alit<\/span>y<\/li>\n  <li>re<span class='match'>alis<\/span>e<\/li>\n  <li>re<span class='match'>ason<\/span><\/li>\n  <li>r<span class='match'>ecen<\/span>t<\/li>\n  <li>r<span class='match'>ecog<\/span>nize<\/li>\n  <li>r<span class='match'>ecom<\/span>mend<\/li>\n  <li>r<span class='match'>ecor<\/span>d<\/li>\n  <li>r<span class='match'>educ<\/span>e<\/li>\n  <li>r<span class='match'>efer<\/span><\/li>\n  <li>r<span class='match'>egar<\/span>d<\/li>\n  <li>r<span class='match'>elat<\/span>ion<\/li>\n  <li>r<span class='match'>emem<\/span>ber<\/li>\n  <li>r<span class='match'>epor<\/span>t<\/li>\n  <li>repr<span class='match'>esen<\/span>t<\/li>\n  <li>r<span class='match'>esul<\/span>t<\/li>\n  <li>r<span class='match'>etur<\/span>n<\/li>\n  <li>s<span class='match'>atur<\/span>day<\/li>\n  <li>s<span class='match'>econ<\/span>d<\/li>\n  <li>secr<span class='match'>etar<\/span>y<\/li>\n  <li>s<span class='match'>ecur<\/span>e<\/li>\n  <li>s<span class='match'>eparat<\/span>e<\/li>\n  <li>s<span class='match'>even<\/span><\/li>\n  <li>s<span class='match'>imilar<\/span><\/li>\n  <li>sp<span class='match'>ecific<\/span><\/li>\n  <li>str<span class='match'>ateg<\/span>y<\/li>\n  <li>st<span class='match'>uden<\/span>t<\/li>\n  <li>st<span class='match'>upid<\/span><\/li>\n  <li>t<span class='match'>elep<\/span>hone<\/li>\n  <li>t<span class='match'>elevis<\/span>ion<\/li>\n  <li>th<span class='match'>erefor<\/span>e<\/li>\n  <li>tho<span class='match'>usan<\/span>d<\/li>\n  <li>t<span class='match'>oday<\/span><\/li>\n  <li>t<span class='match'>oget<\/span>her<\/li>\n  <li>t<span class='match'>omor<\/span>row<\/li>\n  <li>t<span class='match'>onig<\/span>ht<\/li>\n  <li>t<span class='match'>otal<\/span><\/li>\n  <li>t<span class='match'>owar<\/span>d<\/li>\n  <li>tr<span class='match'>avel<\/span><\/li>\n  <li><span class='match'>unit<\/span><\/li>\n  <li><span class='match'>unit<\/span>e<\/li>\n  <li><span class='match'>univer<\/span>sity<\/li>\n  <li><span class='match'>upon<\/span><\/li>\n  <li>v<span class='match'>isit<\/span><\/li>\n  <li>w<span class='match'>ater<\/span><\/li>\n  <li>w<span class='match'>oman<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="grouping-and-backreferences" class="section level3">
@@ -1637,8 +1637,8 @@ str_view(x, &quot;CC?&quot;)</code></pre>
 <p>Earlier, you learned about parentheses as a way to disambiguate complex expressions. Parentheses also create a numbered capturing group (number 1, 2 etc.). A capturing group stores the part of the string matched by the part of the regular expression inside the parentheses. You can refer to the same text as previously matched by a capturing group with backreferences, like \1, \2 etc. For example, the following regular expression finds all fruits that have a repeated pair of letters.</p>
 <p>(Shortly, you’ll also see how they’re useful in conjunction with str_match().)</p>
 <pre class="r"><code>str_view(fruit, &quot;(..)\\1&quot;, match = TRUE)</code></pre>
-<div id="htmlwidget-30c3dd5cfe904c9537fe" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-30c3dd5cfe904c9537fe">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3ecf19f5b5a8489a5b1d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3ecf19f5b5a8489a5b1d">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <div id="exercises-4" class="section level4">
 <h4>14.3.5.1 Exercises</h4>
 <ol style="list-style-type: decimal">
@@ -1650,17 +1650,644 @@ str_view(x, &quot;CC?&quot;)</code></pre>
 </ol>
 <p>Start and end with the same character.</p>
 <pre class="r"><code>str_view(stringr::words, &quot;^(.)((.*\\1$)|\\1?$)&quot;, match=TRUE)</code></pre>
-<div id="htmlwidget-c22e5d05be77f110e5c7" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c22e5d05be77f110e5c7">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><\/li>\n  <li><span class='match'>america<\/span><\/li>\n  <li><span class='match'>area<\/span><\/li>\n  <li><span class='match'>dad<\/span><\/li>\n  <li><span class='match'>dead<\/span><\/li>\n  <li><span class='match'>depend<\/span><\/li>\n  <li><span class='match'>educate<\/span><\/li>\n  <li><span class='match'>else<\/span><\/li>\n  <li><span class='match'>encourage<\/span><\/li>\n  <li><span class='match'>engine<\/span><\/li>\n  <li><span class='match'>europe<\/span><\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>example<\/span><\/li>\n  <li><span class='match'>excuse<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>expense<\/span><\/li>\n  <li><span class='match'>experience<\/span><\/li>\n  <li><span class='match'>eye<\/span><\/li>\n  <li><span class='match'>health<\/span><\/li>\n  <li><span class='match'>high<\/span><\/li>\n  <li><span class='match'>knock<\/span><\/li>\n  <li><span class='match'>level<\/span><\/li>\n  <li><span class='match'>local<\/span><\/li>\n  <li><span class='match'>nation<\/span><\/li>\n  <li><span class='match'>non<\/span><\/li>\n  <li><span class='match'>rather<\/span><\/li>\n  <li><span class='match'>refer<\/span><\/li>\n  <li><span class='match'>remember<\/span><\/li>\n  <li><span class='match'>serious<\/span><\/li>\n  <li><span class='match'>stairs<\/span><\/li>\n  <li><span class='match'>test<\/span><\/li>\n  <li><span class='match'>tonight<\/span><\/li>\n  <li><span class='match'>transport<\/span><\/li>\n  <li><span class='match'>treat<\/span><\/li>\n  <li><span class='match'>trust<\/span><\/li>\n  <li><span class='match'>window<\/span><\/li>\n  <li><span class='match'>yesterday<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7aecb64191aeced268b4" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7aecb64191aeced268b4">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span><\/li>\n  <li><span class='match'>america<\/span><\/li>\n  <li><span class='match'>area<\/span><\/li>\n  <li><span class='match'>dad<\/span><\/li>\n  <li><span class='match'>dead<\/span><\/li>\n  <li><span class='match'>depend<\/span><\/li>\n  <li><span class='match'>educate<\/span><\/li>\n  <li><span class='match'>else<\/span><\/li>\n  <li><span class='match'>encourage<\/span><\/li>\n  <li><span class='match'>engine<\/span><\/li>\n  <li><span class='match'>europe<\/span><\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>example<\/span><\/li>\n  <li><span class='match'>excuse<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>expense<\/span><\/li>\n  <li><span class='match'>experience<\/span><\/li>\n  <li><span class='match'>eye<\/span><\/li>\n  <li><span class='match'>health<\/span><\/li>\n  <li><span class='match'>high<\/span><\/li>\n  <li><span class='match'>knock<\/span><\/li>\n  <li><span class='match'>level<\/span><\/li>\n  <li><span class='match'>local<\/span><\/li>\n  <li><span class='match'>nation<\/span><\/li>\n  <li><span class='match'>non<\/span><\/li>\n  <li><span class='match'>rather<\/span><\/li>\n  <li><span class='match'>refer<\/span><\/li>\n  <li><span class='match'>remember<\/span><\/li>\n  <li><span class='match'>serious<\/span><\/li>\n  <li><span class='match'>stairs<\/span><\/li>\n  <li><span class='match'>test<\/span><\/li>\n  <li><span class='match'>tonight<\/span><\/li>\n  <li><span class='match'>transport<\/span><\/li>\n  <li><span class='match'>treat<\/span><\/li>\n  <li><span class='match'>trust<\/span><\/li>\n  <li><span class='match'>window<\/span><\/li>\n  <li><span class='match'>yesterday<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Contain a repeated pair of letters (e.g. “church” contains “ch” repeated twice.)</p>
 <pre class="r"><code>str_view(stringr::words, &quot;([A-Za-z][A-Za-z]).*\\1&quot;, match=TRUE)</code></pre>
-<div id="htmlwidget-43774550aa6123b5e4ca" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-43774550aa6123b5e4ca">{"x":{"html":"<ul>\n  <li>ap<span class='match'>propr<\/span>iate<\/li>\n  <li><span class='match'>church<\/span><\/li>\n  <li>c<span class='match'>ondition<\/span><\/li>\n  <li><span class='match'>decide<\/span><\/li>\n  <li><span class='match'>environmen<\/span>t<\/li>\n  <li>l<span class='match'>ondon<\/span><\/li>\n  <li>pa<span class='match'>ragra<\/span>ph<\/li>\n  <li>p<span class='match'>articular<\/span><\/li>\n  <li><span class='match'>photograph<\/span><\/li>\n  <li>p<span class='match'>repare<\/span><\/li>\n  <li>p<span class='match'>ressure<\/span><\/li>\n  <li>r<span class='match'>emem<\/span>ber<\/li>\n  <li><span class='match'>repre<\/span>sent<\/li>\n  <li><span class='match'>require<\/span><\/li>\n  <li><span class='match'>sense<\/span><\/li>\n  <li>the<span class='match'>refore<\/span><\/li>\n  <li>u<span class='match'>nderstand<\/span><\/li>\n  <li>w<span class='match'>hethe<\/span>r<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2f2a9f0075b3b49dba14" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2f2a9f0075b3b49dba14">{"x":{"html":"<ul>\n  <li>ap<span class='match'>propr<\/span>iate<\/li>\n  <li><span class='match'>church<\/span><\/li>\n  <li>c<span class='match'>ondition<\/span><\/li>\n  <li><span class='match'>decide<\/span><\/li>\n  <li><span class='match'>environmen<\/span>t<\/li>\n  <li>l<span class='match'>ondon<\/span><\/li>\n  <li>pa<span class='match'>ragra<\/span>ph<\/li>\n  <li>p<span class='match'>articular<\/span><\/li>\n  <li><span class='match'>photograph<\/span><\/li>\n  <li>p<span class='match'>repare<\/span><\/li>\n  <li>p<span class='match'>ressure<\/span><\/li>\n  <li>r<span class='match'>emem<\/span>ber<\/li>\n  <li><span class='match'>repre<\/span>sent<\/li>\n  <li><span class='match'>require<\/span><\/li>\n  <li><span class='match'>sense<\/span><\/li>\n  <li>the<span class='match'>refore<\/span><\/li>\n  <li>u<span class='match'>nderstand<\/span><\/li>\n  <li>w<span class='match'>hethe<\/span>r<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <p>Contain one letter repeated in at least three places (e.g. “eleven” contains three “e”s.)</p>
 <pre class="r"><code>str_view(stringr::words, &quot;([a-z]).*\\1.*\\1&quot;, match=TRUE)</code></pre>
-<div id="htmlwidget-731a89b3f53be41e3d67" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-731a89b3f53be41e3d67">{"x":{"html":"<ul>\n  <li>a<span class='match'>pprop<\/span>riate<\/li>\n  <li><span class='match'>availa<\/span>ble<\/li>\n  <li>b<span class='match'>elieve<\/span><\/li>\n  <li>b<span class='match'>etwee<\/span>n<\/li>\n  <li>bu<span class='match'>siness<\/span><\/li>\n  <li>d<span class='match'>egree<\/span><\/li>\n  <li>diff<span class='match'>erence<\/span><\/li>\n  <li>di<span class='match'>scuss<\/span><\/li>\n  <li><span class='match'>eleve<\/span>n<\/li>\n  <li>e<span class='match'>nvironmen<\/span>t<\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>expense<\/span><\/li>\n  <li><span class='match'>experience<\/span><\/li>\n  <li><span class='match'>indivi<\/span>dual<\/li>\n  <li>p<span class='match'>aragra<\/span>ph<\/li>\n  <li>r<span class='match'>eceive<\/span><\/li>\n  <li>r<span class='match'>emembe<\/span>r<\/li>\n  <li>r<span class='match'>eprese<\/span>nt<\/li>\n  <li>t<span class='match'>elephone<\/span><\/li>\n  <li>th<span class='match'>erefore<\/span><\/li>\n  <li>t<span class='match'>omorro<\/span>w<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-628557d82bd92f6532b5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-628557d82bd92f6532b5">{"x":{"html":"<ul>\n  <li>a<span class='match'>pprop<\/span>riate<\/li>\n  <li><span class='match'>availa<\/span>ble<\/li>\n  <li>b<span class='match'>elieve<\/span><\/li>\n  <li>b<span class='match'>etwee<\/span>n<\/li>\n  <li>bu<span class='match'>siness<\/span><\/li>\n  <li>d<span class='match'>egree<\/span><\/li>\n  <li>diff<span class='match'>erence<\/span><\/li>\n  <li>di<span class='match'>scuss<\/span><\/li>\n  <li><span class='match'>eleve<\/span>n<\/li>\n  <li>e<span class='match'>nvironmen<\/span>t<\/li>\n  <li><span class='match'>evidence<\/span><\/li>\n  <li><span class='match'>exercise<\/span><\/li>\n  <li><span class='match'>expense<\/span><\/li>\n  <li><span class='match'>experience<\/span><\/li>\n  <li><span class='match'>indivi<\/span>dual<\/li>\n  <li>p<span class='match'>aragra<\/span>ph<\/li>\n  <li>r<span class='match'>eceive<\/span><\/li>\n  <li>r<span class='match'>emembe<\/span>r<\/li>\n  <li>r<span class='match'>eprese<\/span>nt<\/li>\n  <li>t<span class='match'>elephone<\/span><\/li>\n  <li>th<span class='match'>erefore<\/span><\/li>\n  <li>t<span class='match'>omorro<\/span>w<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
+</div>
+</div>
+<div id="tools" class="section level2">
+<h2>14.4 Tools</h2>
+<p>Now that you’ve learned the basics of regular expressions, it’s time to learn how to apply them to real problems. In this section you’ll learn a wide array of stringr functions that let you:</p>
+<p>Determine which strings match a pattern. Find the positions of matches. Extract the content of matches. Replace matches with new values. Split a string based on a match.</p>
+<div id="detect-matches" class="section level3">
+<h3>14.4.1 Detect matches</h3>
+<p>Note the below takes advantage of the built in word vector that is loaded with the stringr library.</p>
+<p>To determine if a character vector matches a pattern, use str_detect(). It returns a logical vector the same length as the input:</p>
+<pre class="r"><code>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;)
+str_detect(x, &quot;e&quot;)</code></pre>
+<pre><code>## [1]  TRUE FALSE  TRUE</code></pre>
+<p>Remember that when you use a logical vector in a numeric context, FALSE becomes 0 and TRUE becomes 1. That makes sum() and mean() useful if you want to answer questions about matches across a larger vector:</p>
+<pre class="r"><code>sum(str_detect(words, &quot;^t&quot;))</code></pre>
+<pre><code>## [1] 65</code></pre>
+<pre class="r"><code>mean(str_detect(words, &quot;[aeiou]$&quot;))</code></pre>
+<pre><code>## [1] 0.2765306</code></pre>
+<p>When you have complex logical conditions (e.g. match a or b but not c unless d) it’s often easier to combine multiple str_detect() calls with logical operators, rather than trying to create a single regular expression. For example, here are two ways to find all words that don’t contain any vowels:</p>
+<pre class="r"><code># Find all words containing at least one vowel, and negate
+no_vowels_1 &lt;- !str_detect(words, &quot;[aeiou]&quot;)</code></pre>
+<pre class="r"><code># Find all words consisting only of consonants (non-vowels)
+no_vowels_2 &lt;- str_detect(words, &quot;^[^aeiou]+$&quot;)
+identical(no_vowels_1, no_vowels_2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>The results are identical, but I think the first approach is significantly easier to understand. If your regular expression gets overly complicated, try breaking it up into smaller pieces, giving each piece a name, and then combining the pieces with logical operations.</p>
+<p>A common use of str_detect() is to select the elements that match a pattern. You can do this with logical subsetting, or the convenient str_subset() wrapper:</p>
+<pre class="r"><code>words[str_detect(words, &quot;x$&quot;)]</code></pre>
+<pre><code>## [1] &quot;box&quot; &quot;sex&quot; &quot;six&quot; &quot;tax&quot;</code></pre>
+<pre class="r"><code>str_subset(words, &quot;x$&quot;)</code></pre>
+<pre><code>## [1] &quot;box&quot; &quot;sex&quot; &quot;six&quot; &quot;tax&quot;</code></pre>
+<p>Typically, however, your strings will be one column of a data frame, and you’ll want to use filter instead:</p>
+<pre class="r"><code>df &lt;- tibble(
+  word = words, 
+  i = seq_along(word)
+)
+df %&gt;% 
+  filter(str_detect(word, &quot;x$&quot;))</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##   word      i
+##   &lt;chr&gt; &lt;int&gt;
+## 1 box     108
+## 2 sex     747
+## 3 six     772
+## 4 tax     841</code></pre>
+<p>A variation on str_detect() is str_count(): rather than a simple yes or no, it tells you how many matches there are in a string:</p>
+<pre class="r"><code>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;)
+str_count(x, &quot;a&quot;)</code></pre>
+<pre><code>## [1] 1 3 1</code></pre>
+<pre class="r"><code># On average, how many vowels per word?
+mean(str_count(words, &quot;[aeiou]&quot;))</code></pre>
+<pre><code>## [1] 1.991837</code></pre>
+<p>It’s natural to use str_count() with mutate():</p>
+<pre class="r"><code>df %&gt;% 
+  mutate(
+    vowels = str_count(word, &quot;[aeiou]&quot;),
+    consonants = str_count(word, &quot;[^aeiou]&quot;)
+  )</code></pre>
+<pre><code>## # A tibble: 980 x 4
+##    word         i vowels consonants
+##    &lt;chr&gt;    &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+##  1 a            1      1          0
+##  2 able         2      2          2
+##  3 about        3      3          2
+##  4 absolute     4      4          4
+##  5 accept       5      2          4
+##  6 account      6      3          4
+##  7 achieve      7      4          3
+##  8 across       8      2          4
+##  9 act          9      1          2
+## 10 active      10      3          3
+## # ... with 970 more rows</code></pre>
+<p>Note that matches never overlap. For example, in “abababa”, how many times will the pattern “aba” match? Regular expressions say two, not three:</p>
+<pre class="r"><code>str_count(&quot;abababa&quot;, &quot;aba&quot;)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>str_view_all(&quot;abababa&quot;, &quot;aba&quot;)</code></pre>
+<div id="htmlwidget-77c8739dcf816e1ca4bf" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-77c8739dcf816e1ca4bf">{"x":{"html":"<ul>\n  <li><span class='match'>aba<\/span>b<span class='match'>aba<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<p>Note the use of str_view_all(). As you’ll shortly learn, many stringr functions come in pairs: one function works with a single match, and the other works with all matches. The second function will have the suffix _all.</p>
+<div id="exercises-5" class="section level4">
+<h4>14.4.1.1 Exercises</h4>
+<ol style="list-style-type: decimal">
+<li>For each of the following challenges, try solving it by using both a single regular expression, and a combination of multiple str_detect() calls.</li>
+</ol>
+<p>Find all words that start or end with x. a. Single</p>
+<pre class="r"><code>words[str_detect(words, &quot;^x|x$&quot;)]</code></pre>
+<pre><code>## [1] &quot;box&quot; &quot;sex&quot; &quot;six&quot; &quot;tax&quot;</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Multiple</li>
+</ol>
+<pre class="r"><code>start &lt;- str_detect(words, &quot;^x&quot;)
+end &lt;- str_detect(words, &quot;x$&quot;)
+words[start | end]</code></pre>
+<pre><code>## [1] &quot;box&quot; &quot;sex&quot; &quot;six&quot; &quot;tax&quot;</code></pre>
+<p>Words starting with vowel and ending with consonant a. Single</p>
+<pre class="r"><code>str_subset(words, &quot;^[aeiou].*[^aeiou]$&quot;)</code></pre>
+<pre><code>##   [1] &quot;about&quot;       &quot;accept&quot;      &quot;account&quot;     &quot;across&quot;      &quot;act&quot;        
+##   [6] &quot;actual&quot;      &quot;add&quot;         &quot;address&quot;     &quot;admit&quot;       &quot;affect&quot;     
+##  [11] &quot;afford&quot;      &quot;after&quot;       &quot;afternoon&quot;   &quot;again&quot;       &quot;against&quot;    
+##  [16] &quot;agent&quot;       &quot;air&quot;         &quot;all&quot;         &quot;allow&quot;       &quot;almost&quot;     
+##  [21] &quot;along&quot;       &quot;already&quot;     &quot;alright&quot;     &quot;although&quot;    &quot;always&quot;     
+##  [26] &quot;amount&quot;      &quot;and&quot;         &quot;another&quot;     &quot;answer&quot;      &quot;any&quot;        
+##  [31] &quot;apart&quot;       &quot;apparent&quot;    &quot;appear&quot;      &quot;apply&quot;       &quot;appoint&quot;    
+##  [36] &quot;approach&quot;    &quot;arm&quot;         &quot;around&quot;      &quot;art&quot;         &quot;as&quot;         
+##  [41] &quot;ask&quot;         &quot;at&quot;          &quot;attend&quot;      &quot;authority&quot;   &quot;away&quot;       
+##  [46] &quot;awful&quot;       &quot;each&quot;        &quot;early&quot;       &quot;east&quot;        &quot;easy&quot;       
+##  [51] &quot;eat&quot;         &quot;economy&quot;     &quot;effect&quot;      &quot;egg&quot;         &quot;eight&quot;      
+##  [56] &quot;either&quot;      &quot;elect&quot;       &quot;electric&quot;    &quot;eleven&quot;      &quot;employ&quot;     
+##  [61] &quot;end&quot;         &quot;english&quot;     &quot;enjoy&quot;       &quot;enough&quot;      &quot;enter&quot;      
+##  [66] &quot;environment&quot; &quot;equal&quot;       &quot;especial&quot;    &quot;even&quot;        &quot;evening&quot;    
+##  [71] &quot;ever&quot;        &quot;every&quot;       &quot;exact&quot;       &quot;except&quot;      &quot;exist&quot;      
+##  [76] &quot;expect&quot;      &quot;explain&quot;     &quot;express&quot;     &quot;identify&quot;    &quot;if&quot;         
+##  [81] &quot;important&quot;   &quot;in&quot;          &quot;indeed&quot;      &quot;individual&quot;  &quot;industry&quot;   
+##  [86] &quot;inform&quot;      &quot;instead&quot;     &quot;interest&quot;    &quot;invest&quot;      &quot;it&quot;         
+##  [91] &quot;item&quot;        &quot;obvious&quot;     &quot;occasion&quot;    &quot;odd&quot;         &quot;of&quot;         
+##  [96] &quot;off&quot;         &quot;offer&quot;       &quot;often&quot;       &quot;okay&quot;        &quot;old&quot;        
+## [101] &quot;on&quot;          &quot;only&quot;        &quot;open&quot;        &quot;opportunity&quot; &quot;or&quot;         
+## [106] &quot;order&quot;       &quot;original&quot;    &quot;other&quot;       &quot;ought&quot;       &quot;out&quot;        
+## [111] &quot;over&quot;        &quot;own&quot;         &quot;under&quot;       &quot;understand&quot;  &quot;union&quot;      
+## [116] &quot;unit&quot;        &quot;university&quot;  &quot;unless&quot;      &quot;until&quot;       &quot;up&quot;         
+## [121] &quot;upon&quot;        &quot;usual&quot;</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Multiple</li>
+</ol>
+<pre class="r"><code>start &lt;- str_detect(words, &quot;^[aeiou]&quot;)
+end &lt;- str_detect(words, &quot;[^aeiou]$&quot;)
+words[start &amp; end]</code></pre>
+<pre><code>##   [1] &quot;about&quot;       &quot;accept&quot;      &quot;account&quot;     &quot;across&quot;      &quot;act&quot;        
+##   [6] &quot;actual&quot;      &quot;add&quot;         &quot;address&quot;     &quot;admit&quot;       &quot;affect&quot;     
+##  [11] &quot;afford&quot;      &quot;after&quot;       &quot;afternoon&quot;   &quot;again&quot;       &quot;against&quot;    
+##  [16] &quot;agent&quot;       &quot;air&quot;         &quot;all&quot;         &quot;allow&quot;       &quot;almost&quot;     
+##  [21] &quot;along&quot;       &quot;already&quot;     &quot;alright&quot;     &quot;although&quot;    &quot;always&quot;     
+##  [26] &quot;amount&quot;      &quot;and&quot;         &quot;another&quot;     &quot;answer&quot;      &quot;any&quot;        
+##  [31] &quot;apart&quot;       &quot;apparent&quot;    &quot;appear&quot;      &quot;apply&quot;       &quot;appoint&quot;    
+##  [36] &quot;approach&quot;    &quot;arm&quot;         &quot;around&quot;      &quot;art&quot;         &quot;as&quot;         
+##  [41] &quot;ask&quot;         &quot;at&quot;          &quot;attend&quot;      &quot;authority&quot;   &quot;away&quot;       
+##  [46] &quot;awful&quot;       &quot;each&quot;        &quot;early&quot;       &quot;east&quot;        &quot;easy&quot;       
+##  [51] &quot;eat&quot;         &quot;economy&quot;     &quot;effect&quot;      &quot;egg&quot;         &quot;eight&quot;      
+##  [56] &quot;either&quot;      &quot;elect&quot;       &quot;electric&quot;    &quot;eleven&quot;      &quot;employ&quot;     
+##  [61] &quot;end&quot;         &quot;english&quot;     &quot;enjoy&quot;       &quot;enough&quot;      &quot;enter&quot;      
+##  [66] &quot;environment&quot; &quot;equal&quot;       &quot;especial&quot;    &quot;even&quot;        &quot;evening&quot;    
+##  [71] &quot;ever&quot;        &quot;every&quot;       &quot;exact&quot;       &quot;except&quot;      &quot;exist&quot;      
+##  [76] &quot;expect&quot;      &quot;explain&quot;     &quot;express&quot;     &quot;identify&quot;    &quot;if&quot;         
+##  [81] &quot;important&quot;   &quot;in&quot;          &quot;indeed&quot;      &quot;individual&quot;  &quot;industry&quot;   
+##  [86] &quot;inform&quot;      &quot;instead&quot;     &quot;interest&quot;    &quot;invest&quot;      &quot;it&quot;         
+##  [91] &quot;item&quot;        &quot;obvious&quot;     &quot;occasion&quot;    &quot;odd&quot;         &quot;of&quot;         
+##  [96] &quot;off&quot;         &quot;offer&quot;       &quot;often&quot;       &quot;okay&quot;        &quot;old&quot;        
+## [101] &quot;on&quot;          &quot;only&quot;        &quot;open&quot;        &quot;opportunity&quot; &quot;or&quot;         
+## [106] &quot;order&quot;       &quot;original&quot;    &quot;other&quot;       &quot;ought&quot;       &quot;out&quot;        
+## [111] &quot;over&quot;        &quot;own&quot;         &quot;under&quot;       &quot;understand&quot;  &quot;union&quot;      
+## [116] &quot;unit&quot;        &quot;university&quot;  &quot;unless&quot;      &quot;until&quot;       &quot;up&quot;         
+## [121] &quot;upon&quot;        &quot;usual&quot;</code></pre>
+<p>Are there any words that contain at least one of each different vowel? a. Single</p>
+<pre class="r"><code>pattern &lt;-
+  cross(rerun(5, c(&quot;a&quot;, &quot;e&quot;, &quot;i&quot;, &quot;o&quot;, &quot;u&quot;)),
+    .filter = function(...) {
+      x &lt;- as.character(unlist(list(...)))
+      length(x) != length(unique(x))
+    }
+  ) %&gt;%
+  map_chr(~str_c(unlist(.x), collapse = &quot;.*&quot;)) %&gt;%
+  str_c(collapse = &quot;|&quot;)
+str_subset(&quot;aseiouds&quot;, pattern)</code></pre>
+<pre><code>## [1] &quot;aseiouds&quot;</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Multiple</li>
+</ol>
+<pre class="r"><code>&quot;aseiouds&quot;[str_detect(&quot;aseiouds&quot;, &quot;a&quot;) &amp;
+  str_detect(&quot;aseiouds&quot;, &quot;e&quot;) &amp;
+  str_detect(&quot;aseiouds&quot;, &quot;i&quot;) &amp;
+  str_detect(&quot;aseiouds&quot;, &quot;o&quot;) &amp;
+  str_detect(&quot;aseiouds&quot;, &quot;u&quot;)]</code></pre>
+<pre><code>## [1] &quot;aseiouds&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>What word has the highest number of vowels? What word has the highest proportion of vowels? (Hint: what is the denominator?)</li>
+</ol>
+<pre class="r"><code>vowels &lt;- str_count(words, &quot;[aeiou]&quot;)
+words[which(vowels == max(vowels))]</code></pre>
+<pre><code>## [1] &quot;appropriate&quot; &quot;associate&quot;   &quot;available&quot;   &quot;colleague&quot;   &quot;encourage&quot;  
+## [6] &quot;experience&quot;  &quot;individual&quot;  &quot;television&quot;</code></pre>
+<pre class="r"><code>prop_vowels &lt;- str_count(words, &quot;[aeiou]&quot;) / str_length(words)
+words[which(prop_vowels == max(prop_vowels)) ]</code></pre>
+<pre><code>## [1] &quot;a&quot;</code></pre>
+</div>
+<div id="extract-matches" class="section level4">
+<h4>14.4.2 Extract matches</h4>
+<p>To extract the actual text of a match, use str_extract(). To show that off, we’re going to need a more complicated example. I’m going to use the Harvard sentences, which were designed to test VOIP systems, but are also useful for practicing regexps. These are provided in</p>
+<pre class="r"><code>length(sentences)</code></pre>
+<pre><code>## [1] 720</code></pre>
+<pre class="r"><code>head(sentences)</code></pre>
+<pre><code>## [1] &quot;The birch canoe slid on the smooth planks.&quot; 
+## [2] &quot;Glue the sheet to the dark blue background.&quot;
+## [3] &quot;It&#39;s easy to tell the depth of a well.&quot;     
+## [4] &quot;These days a chicken leg is a rare dish.&quot;   
+## [5] &quot;Rice is often served in round bowls.&quot;       
+## [6] &quot;The juice of lemons makes fine punch.&quot;</code></pre>
+<p>Imagine we want to find all sentences that contain a colour. We first create a vector of colour names, and then turn it into a single regular expression:</p>
+<pre class="r"><code>colours &lt;- c(&quot;red&quot;, &quot;orange&quot;, &quot;yellow&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;purple&quot;)
+colour_match &lt;- str_c(colours, collapse = &quot;|&quot;)
+colour_match</code></pre>
+<pre><code>## [1] &quot;red|orange|yellow|green|blue|purple&quot;</code></pre>
+<p>Now we can select the sentences that contain a colour, and then extract the colour to figure out which one it is:</p>
+<pre class="r"><code>has_colour &lt;- str_subset(sentences, colour_match)
+matches &lt;- str_extract(has_colour, colour_match)
+head(matches)</code></pre>
+<pre><code>## [1] &quot;blue&quot; &quot;blue&quot; &quot;red&quot;  &quot;red&quot;  &quot;red&quot;  &quot;blue&quot;</code></pre>
+<pre class="r"><code>has_colour</code></pre>
+<pre><code>##  [1] &quot;Glue the sheet to the dark blue background.&quot;       
+##  [2] &quot;Two blue fish swam in the tank.&quot;                   
+##  [3] &quot;The colt reared and threw the tall rider.&quot;         
+##  [4] &quot;The wide road shimmered in the hot sun.&quot;           
+##  [5] &quot;See the cat glaring at the scared mouse.&quot;          
+##  [6] &quot;A wisp of cloud hung in the blue air.&quot;             
+##  [7] &quot;Leaves turn brown and yellow in the fall.&quot;         
+##  [8] &quot;He ordered peach pie with ice cream.&quot;              
+##  [9] &quot;Pure bred poodles have curls.&quot;                     
+## [10] &quot;The spot on the blotter was made by green ink.&quot;    
+## [11] &quot;Mud was spattered on the front of his white shirt.&quot;
+## [12] &quot;The sofa cushion is red and of light weight.&quot;      
+## [13] &quot;The sky that morning was clear and bright blue.&quot;   
+## [14] &quot;Torn scraps littered the stone floor.&quot;             
+## [15] &quot;The doctor cured him with these pills.&quot;            
+## [16] &quot;The new girl was fired today at noon.&quot;             
+## [17] &quot;The third act was dull and tired the players.&quot;     
+## [18] &quot;A blue crane is a tall wading bird.&quot;               
+## [19] &quot;Lire wires should be kept covered.&quot;                
+## [20] &quot;It is hard to erase blue or red ink.&quot;              
+## [21] &quot;The wreck occurred by the bank on Main Street.&quot;    
+## [22] &quot;The lamp shone with a steady green flame.&quot;         
+## [23] &quot;The box is held by a bright red snapper.&quot;          
+## [24] &quot;The prince ordered his head chopped off.&quot;          
+## [25] &quot;The houses are built of red clay bricks.&quot;          
+## [26] &quot;The red tape bound the smuggled food.&quot;             
+## [27] &quot;Nine men were hired to dig the ruins.&quot;             
+## [28] &quot;The flint sputtered and lit a pine torch.&quot;         
+## [29] &quot;Hedge apples may stain your hands green.&quot;          
+## [30] &quot;The old pan was covered with hard fudge.&quot;          
+## [31] &quot;The plant grew large and green in the window.&quot;     
+## [32] &quot;The store walls were lined with colored frocks.&quot;   
+## [33] &quot;The purple tie was ten years old.&quot;                 
+## [34] &quot;Bathe and relax in the cool green grass.&quot;          
+## [35] &quot;The clan gathered on each dull night.&quot;             
+## [36] &quot;The lake sparkled in the red hot sun.&quot;             
+## [37] &quot;Mark the spot with a sign painted red.&quot;            
+## [38] &quot;Smoke poured out of every crack.&quot;                  
+## [39] &quot;Serve the hot rum to the tired heroes.&quot;            
+## [40] &quot;The couch cover and hall drapes were blue.&quot;        
+## [41] &quot;He offered proof in the form of a lsrge chart.&quot;    
+## [42] &quot;A man in a blue sweater sat at the desk.&quot;          
+## [43] &quot;The sip of tea revives his tired friend.&quot;          
+## [44] &quot;The door was barred, locked, and bolted as well.&quot;  
+## [45] &quot;A thick coat of black paint covered all.&quot;          
+## [46] &quot;The small red neon lamp went out.&quot;                 
+## [47] &quot;Paint the sockets in the wall dull green.&quot;         
+## [48] &quot;Wake and rise, and step into the green outdoors.&quot;  
+## [49] &quot;The green light in the brown box flickered.&quot;       
+## [50] &quot;He put his last cartridge into the gun and fired.&quot; 
+## [51] &quot;The ram scared the school children off.&quot;           
+## [52] &quot;Tear a thin sheet from the yellow pad.&quot;            
+## [53] &quot;Dimes showered down from all sides.&quot;               
+## [54] &quot;The sky in the west is tinged with orange red.&quot;    
+## [55] &quot;The red paper brightened the dim stage.&quot;           
+## [56] &quot;The hail pattered on the burnt brown grass.&quot;       
+## [57] &quot;The big red apple fell to the ground.&quot;</code></pre>
+<p>Can your spot the issue with the regular expression?</p>
+<p>Note that str_extract() only extracts the first match. We can see that most easily by first selecting all the sentences that have more than 1 match:</p>
+<pre class="r"><code>more &lt;- sentences[str_count(sentences, colour_match) &gt; 1]
+str_view_all(more, colour_match)</code></pre>
+<div id="htmlwidget-0dadf9818e0495d899e4" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0dadf9818e0495d899e4">{"x":{"html":"<ul>\n  <li>It is hard to erase <span class='match'>blue<\/span> or <span class='match'>red<\/span> ink.<\/li>\n  <li>The <span class='match'>green<\/span> light in the brown box flicke<span class='match'>red<\/span>.<\/li>\n  <li>The sky in the west is tinged with <span class='match'>orange<\/span> <span class='match'>red<\/span>.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_extract(more, colour_match)</code></pre>
+<pre><code>## [1] &quot;blue&quot;   &quot;green&quot;  &quot;orange&quot;</code></pre>
+<pre class="r"><code>str_extract_all(more, colour_match)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;blue&quot; &quot;red&quot; 
+## 
+## [[2]]
+## [1] &quot;green&quot; &quot;red&quot;  
+## 
+## [[3]]
+## [1] &quot;orange&quot; &quot;red&quot;</code></pre>
+<p>You’ll learn more about lists in lists <a href="https://r4ds.had.co.nz/vectors.html#lists" class="uri">https://r4ds.had.co.nz/vectors.html#lists</a> and iteration <a href="https://r4ds.had.co.nz/vectors.html#iteration" class="uri">https://r4ds.had.co.nz/vectors.html#iteration</a>.</p>
+<p>If you use simplify = TRUE, str_extract_all() will return a matrix with short matches expanded to the same length as the longest:</p>
+<pre class="r"><code>str_extract_all(more, colour_match, simplify = TRUE)</code></pre>
+<pre><code>##      [,1]     [,2] 
+## [1,] &quot;blue&quot;   &quot;red&quot;
+## [2,] &quot;green&quot;  &quot;red&quot;
+## [3,] &quot;orange&quot; &quot;red&quot;</code></pre>
+<pre class="r"><code>x &lt;- c(&quot;a&quot;, &quot;a b&quot;, &quot;a b c&quot;)
+str_extract_all(x, &quot;[a-z]&quot;, simplify = TRUE)</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,] &quot;a&quot;  &quot;&quot;   &quot;&quot;  
+## [2,] &quot;a&quot;  &quot;b&quot;  &quot;&quot;  
+## [3,] &quot;a&quot;  &quot;b&quot;  &quot;c&quot;</code></pre>
+</div>
+<div id="exercises-6" class="section level4">
+<h4>14.4.2.1 Exercises</h4>
+<ol style="list-style-type: decimal">
+<li>In the previous example, you might have noticed that the regular expression matched “flickered”, which is not a colour. Modify the regex to fix the problem.</li>
+</ol>
+<p>It match the color charactor inside the the word, not only the color word</p>
+<p>We can do this by adding a to indicate a word boundary) before and after the pattern:</p>
+<pre class="r"><code>colour_match2 &lt;- str_c(&quot;\\b(&quot;, str_c(colours, collapse = &quot;|&quot;), &quot;)\\b&quot;)
+has_colour &lt;- str_subset(sentences, colour_match2)
+has_colour</code></pre>
+<pre><code>##  [1] &quot;Glue the sheet to the dark blue background.&quot;     
+##  [2] &quot;Two blue fish swam in the tank.&quot;                 
+##  [3] &quot;A wisp of cloud hung in the blue air.&quot;           
+##  [4] &quot;Leaves turn brown and yellow in the fall.&quot;       
+##  [5] &quot;The spot on the blotter was made by green ink.&quot;  
+##  [6] &quot;The sofa cushion is red and of light weight.&quot;    
+##  [7] &quot;The sky that morning was clear and bright blue.&quot; 
+##  [8] &quot;A blue crane is a tall wading bird.&quot;             
+##  [9] &quot;It is hard to erase blue or red ink.&quot;            
+## [10] &quot;The lamp shone with a steady green flame.&quot;       
+## [11] &quot;The box is held by a bright red snapper.&quot;        
+## [12] &quot;The houses are built of red clay bricks.&quot;        
+## [13] &quot;The red tape bound the smuggled food.&quot;           
+## [14] &quot;Hedge apples may stain your hands green.&quot;        
+## [15] &quot;The plant grew large and green in the window.&quot;   
+## [16] &quot;The purple tie was ten years old.&quot;               
+## [17] &quot;Bathe and relax in the cool green grass.&quot;        
+## [18] &quot;The lake sparkled in the red hot sun.&quot;           
+## [19] &quot;Mark the spot with a sign painted red.&quot;          
+## [20] &quot;The couch cover and hall drapes were blue.&quot;      
+## [21] &quot;A man in a blue sweater sat at the desk.&quot;        
+## [22] &quot;The small red neon lamp went out.&quot;               
+## [23] &quot;Paint the sockets in the wall dull green.&quot;       
+## [24] &quot;Wake and rise, and step into the green outdoors.&quot;
+## [25] &quot;The green light in the brown box flickered.&quot;     
+## [26] &quot;Tear a thin sheet from the yellow pad.&quot;          
+## [27] &quot;The sky in the west is tinged with orange red.&quot;  
+## [28] &quot;The red paper brightened the dim stage.&quot;         
+## [29] &quot;The big red apple fell to the ground.&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>From the Harvard sentences data, extract: The first word from each sentence.</li>
+</ol>
+<pre class="r"><code># str_extract(sentences, &quot;[A-Za-z][A-Za-z&#39;]*&quot;)</code></pre>
+<p>All words ending in ing.</p>
+<pre class="r"><code>pattern &lt;- &quot;\\b[A-Za-z]+ing\\b&quot;
+sentences_with_ing &lt;- str_detect(sentences, pattern)
+unique(unlist(str_extract_all(sentences[sentences_with_ing], pattern)))</code></pre>
+<pre><code>##  [1] &quot;spring&quot;    &quot;evening&quot;   &quot;morning&quot;   &quot;winding&quot;   &quot;living&quot;    &quot;king&quot;     
+##  [7] &quot;Adding&quot;    &quot;making&quot;    &quot;raging&quot;    &quot;playing&quot;   &quot;sleeping&quot;  &quot;ring&quot;     
+## [13] &quot;glaring&quot;   &quot;sinking&quot;   &quot;dying&quot;     &quot;Bring&quot;     &quot;lodging&quot;   &quot;filing&quot;   
+## [19] &quot;wearing&quot;   &quot;wading&quot;    &quot;swing&quot;     &quot;nothing&quot;   &quot;sing&quot;      &quot;painting&quot; 
+## [25] &quot;walking&quot;   &quot;bring&quot;     &quot;shipping&quot;  &quot;puzzling&quot;  &quot;landing&quot;   &quot;thing&quot;    
+## [31] &quot;waiting&quot;   &quot;whistling&quot; &quot;timing&quot;    &quot;changing&quot;  &quot;drenching&quot; &quot;moving&quot;   
+## [37] &quot;working&quot;</code></pre>
+<p>All plurals.</p>
+<pre class="r"><code># unique(unlist(str_extract_all(sentences, &quot;\\b[A-Za-z]{3,}s\\b&quot;)))</code></pre>
+</div>
+</div>
+<div id="grouped-matches" class="section level3">
+<h3>14.4.3 Grouped matches</h3>
+<p>Earlier in this chapter we talked about the use of parentheses for clarifying precedence and for backreferences when matching. You can also use parentheses to extract parts of a complex match. For example, imagine we want to extract nouns from the sentences. As a heuristic, we’ll look for any word that comes after “a” or “the”. Defining a “word” in a regular expression is a little tricky, so here I use a simple approximation: a sequence of at least one character that isn’t a space.</p>
+<pre class="r"><code>noun &lt;- &quot;(a|the) ([^ ]+)&quot;
+
+has_noun &lt;- sentences %&gt;%
+  str_subset(noun) %&gt;%
+  head(10)
+has_noun %&gt;% 
+  str_extract(noun)</code></pre>
+<pre><code>##  [1] &quot;the smooth&quot; &quot;the sheet&quot;  &quot;the depth&quot;  &quot;a chicken&quot;  &quot;the parked&quot;
+##  [6] &quot;the sun&quot;    &quot;the huge&quot;   &quot;the ball&quot;   &quot;the woman&quot;  &quot;a helps&quot;</code></pre>
+<p>str_extract() gives us the complete match; str_match() gives each individual component. Instead of a character vector, it returns a matrix, with one column for the complete match followed by one column for each group:</p>
+<pre class="r"><code>has_noun %&gt;% 
+  str_match(noun)</code></pre>
+<pre><code>##       [,1]         [,2]  [,3]     
+##  [1,] &quot;the smooth&quot; &quot;the&quot; &quot;smooth&quot; 
+##  [2,] &quot;the sheet&quot;  &quot;the&quot; &quot;sheet&quot;  
+##  [3,] &quot;the depth&quot;  &quot;the&quot; &quot;depth&quot;  
+##  [4,] &quot;a chicken&quot;  &quot;a&quot;   &quot;chicken&quot;
+##  [5,] &quot;the parked&quot; &quot;the&quot; &quot;parked&quot; 
+##  [6,] &quot;the sun&quot;    &quot;the&quot; &quot;sun&quot;    
+##  [7,] &quot;the huge&quot;   &quot;the&quot; &quot;huge&quot;   
+##  [8,] &quot;the ball&quot;   &quot;the&quot; &quot;ball&quot;   
+##  [9,] &quot;the woman&quot;  &quot;the&quot; &quot;woman&quot;  
+## [10,] &quot;a helps&quot;    &quot;a&quot;   &quot;helps&quot;</code></pre>
+<p>(Unsurprisingly, our heuristic for detecting nouns is poor, and also picks up adjectives like smooth and parked.)</p>
+<p>If your data is in a tibble, it’s often easier to use tidyr::extract(). It works like str_match() but requires you to name the matches, which are then placed in new columns:</p>
+<pre class="r"><code>tibble(sentence = sentences) %&gt;% 
+  tidyr::extract(
+    sentence, c(&quot;article&quot;, &quot;noun&quot;), &quot;(a|the) ([^ ]+)&quot;, 
+    remove = FALSE
+  )</code></pre>
+<pre><code>## # A tibble: 720 x 3
+##    sentence                                    article noun   
+##    &lt;chr&gt;                                       &lt;chr&gt;   &lt;chr&gt;  
+##  1 The birch canoe slid on the smooth planks.  the     smooth 
+##  2 Glue the sheet to the dark blue background. the     sheet  
+##  3 It&#39;s easy to tell the depth of a well.      the     depth  
+##  4 These days a chicken leg is a rare dish.    a       chicken
+##  5 Rice is often served in round bowls.        &lt;NA&gt;    &lt;NA&gt;   
+##  6 The juice of lemons makes fine punch.       &lt;NA&gt;    &lt;NA&gt;   
+##  7 The box was thrown beside the parked truck. the     parked 
+##  8 The hogs were fed chopped corn and garbage. &lt;NA&gt;    &lt;NA&gt;   
+##  9 Four hours of steady work faced us.         &lt;NA&gt;    &lt;NA&gt;   
+## 10 Large size in stockings is hard to sell.    &lt;NA&gt;    &lt;NA&gt;   
+## # ... with 710 more rows</code></pre>
+<p>Like str_extract(), if you want all matches for each string, you’ll need str_match_all().</p>
+<div id="exercises-7" class="section level4">
+<h4>14.4.3.1 Exercises</h4>
+<ol style="list-style-type: decimal">
+<li>Find all words that come after a “number” like “one”, “two”, “three” etc. Pull out both the number and the word.</li>
+</ol>
+<pre class="r"><code>numword &lt;- &quot;\\b(one|two|three|four|five|six|seven|eight|nine|ten) +(\\w+)&quot;
+sentences[str_detect(sentences, numword)] %&gt;%
+  str_extract(numword)</code></pre>
+<pre><code>##  [1] &quot;seven books&quot;   &quot;two met&quot;       &quot;two factors&quot;   &quot;three lists&quot;  
+##  [5] &quot;seven is&quot;      &quot;two when&quot;      &quot;ten inches&quot;    &quot;one war&quot;      
+##  [9] &quot;one button&quot;    &quot;six minutes&quot;   &quot;ten years&quot;     &quot;two shares&quot;   
+## [13] &quot;two distinct&quot;  &quot;five cents&quot;    &quot;two pins&quot;      &quot;five robins&quot;  
+## [17] &quot;four kinds&quot;    &quot;three story&quot;   &quot;three inches&quot;  &quot;six comes&quot;    
+## [21] &quot;three batches&quot; &quot;two leaves&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Find all contractions. Separate out the pieces before and after the apostrophe.</li>
+</ol>
+<pre class="r"><code>contraction &lt;- &quot;([A-Za-z]+)&#39;([A-Za-z]+)&quot;
+sentences[str_detect(sentences, contraction)] %&gt;%
+  str_extract(contraction) %&gt;%
+  str_split(&quot;&#39;&quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;It&quot; &quot;s&quot; 
+## 
+## [[2]]
+## [1] &quot;man&quot; &quot;s&quot;  
+## 
+## [[3]]
+## [1] &quot;don&quot; &quot;t&quot;  
+## 
+## [[4]]
+## [1] &quot;store&quot; &quot;s&quot;    
+## 
+## [[5]]
+## [1] &quot;workmen&quot; &quot;s&quot;      
+## 
+## [[6]]
+## [1] &quot;Let&quot; &quot;s&quot;  
+## 
+## [[7]]
+## [1] &quot;sun&quot; &quot;s&quot;  
+## 
+## [[8]]
+## [1] &quot;child&quot; &quot;s&quot;    
+## 
+## [[9]]
+## [1] &quot;king&quot; &quot;s&quot;   
+## 
+## [[10]]
+## [1] &quot;It&quot; &quot;s&quot; 
+## 
+## [[11]]
+## [1] &quot;don&quot; &quot;t&quot;  
+## 
+## [[12]]
+## [1] &quot;queen&quot; &quot;s&quot;    
+## 
+## [[13]]
+## [1] &quot;don&quot; &quot;t&quot;  
+## 
+## [[14]]
+## [1] &quot;pirate&quot; &quot;s&quot;     
+## 
+## [[15]]
+## [1] &quot;neighbor&quot; &quot;s&quot;</code></pre>
+</div>
+</div>
+<div id="replacing-matches" class="section level3">
+<h3>14.4.4 Replacing matches</h3>
+<p>str_replace() and str_replace_all() allow you to replace matches with new strings. The simplest use is to replace a pattern with a fixed string:</p>
+<pre class="r"><code>x &lt;- c(&quot;apple&quot;, &quot;pear&quot;, &quot;banana&quot;)
+str_replace(x, &quot;[aeiou]&quot;, &quot;-&quot;)</code></pre>
+<pre><code>## [1] &quot;-pple&quot;  &quot;p-ar&quot;   &quot;b-nana&quot;</code></pre>
+<pre class="r"><code>str_replace_all(x, &quot;[aeiou]&quot;, &quot;-&quot;)</code></pre>
+<pre><code>## [1] &quot;-ppl-&quot;  &quot;p--r&quot;   &quot;b-n-n-&quot;</code></pre>
+<p>With str_replace_all() you can perform multiple replacements by supplying a named vector:</p>
+<pre class="r"><code>x &lt;- c(&quot;1 house&quot;, &quot;2 cars&quot;, &quot;3 people&quot;)
+str_replace_all(x, c(&quot;1&quot; = &quot;one&quot;, &quot;2&quot; = &quot;two&quot;, &quot;3&quot; = &quot;three&quot;))</code></pre>
+<pre><code>## [1] &quot;one house&quot;    &quot;two cars&quot;     &quot;three people&quot;</code></pre>
+<p>Instead of replacing with a fixed string you can use backreferences to insert components of the match. In the following code, I flip the order of the second and third words.</p>
+<pre class="r"><code>sentences %&gt;% 
+  str_replace(&quot;([^ ]+) ([^ ]+) ([^ ]+)&quot;, &quot;\\1 \\3 \\2&quot;) %&gt;% 
+  head(5)</code></pre>
+<pre><code>## [1] &quot;The canoe birch slid on the smooth planks.&quot; 
+## [2] &quot;Glue sheet the to the dark blue background.&quot;
+## [3] &quot;It&#39;s to easy tell the depth of a well.&quot;     
+## [4] &quot;These a days chicken leg is a rare dish.&quot;   
+## [5] &quot;Rice often is served in round bowls.&quot;</code></pre>
+<div id="exercises-8" class="section level4">
+<h4>14.4.4.1 Exercises</h4>
+<ol style="list-style-type: decimal">
+<li>Replace all forward slashes in a string with backslashes.</li>
+</ol>
+<pre class="r"><code>str_replace_all(&quot;past/present/future&quot;, &quot;/&quot;, &quot;\\\\&quot;)</code></pre>
+<pre><code>## [1] &quot;past\\present\\future&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Implement a simple version of str_to_lower() using replace_all().</li>
+</ol>
+<pre class="r"><code>replacements &lt;- c(&quot;A&quot; = &quot;a&quot;, &quot;B&quot; = &quot;b&quot;, &quot;C&quot; = &quot;c&quot;, &quot;D&quot; = &quot;d&quot;, &quot;E&quot; = &quot;e&quot;,
+                  &quot;F&quot; = &quot;f&quot;, &quot;G&quot; = &quot;g&quot;, &quot;H&quot; = &quot;h&quot;, &quot;I&quot; = &quot;i&quot;, &quot;J&quot; = &quot;j&quot;, 
+                  &quot;K&quot; = &quot;k&quot;, &quot;L&quot; = &quot;l&quot;, &quot;M&quot; = &quot;m&quot;, &quot;N&quot; = &quot;n&quot;, &quot;O&quot; = &quot;o&quot;, 
+                  &quot;P&quot; = &quot;p&quot;, &quot;Q&quot; = &quot;q&quot;, &quot;R&quot; = &quot;r&quot;, &quot;S&quot; = &quot;s&quot;, &quot;T&quot; = &quot;t&quot;, 
+                  &quot;U&quot; = &quot;u&quot;, &quot;V&quot; = &quot;v&quot;, &quot;W&quot; = &quot;w&quot;, &quot;X&quot; = &quot;x&quot;, &quot;Y&quot; = &quot;y&quot;, 
+                  &quot;Z&quot; = &quot;z&quot;)
+lower_words &lt;- str_replace_all(words, pattern = replacements)
+head(lower_words)</code></pre>
+<pre><code>## [1] &quot;a&quot;        &quot;able&quot;     &quot;about&quot;    &quot;absolute&quot; &quot;accept&quot;   &quot;account&quot;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Switch the first and last letters in words. Which of those strings are still words?</li>
+</ol>
+<pre class="r"><code>swapped &lt;- str_replace_all(words, &quot;^([A-Za-z])(.*)([A-Za-z])$&quot;, &quot;\\3\\2\\1&quot;)
+intersect(swapped, words)</code></pre>
+<pre><code>##  [1] &quot;a&quot;          &quot;america&quot;    &quot;area&quot;       &quot;dad&quot;        &quot;dead&quot;      
+##  [6] &quot;lead&quot;       &quot;read&quot;       &quot;depend&quot;     &quot;god&quot;        &quot;educate&quot;   
+## [11] &quot;else&quot;       &quot;encourage&quot;  &quot;engine&quot;     &quot;europe&quot;     &quot;evidence&quot;  
+## [16] &quot;example&quot;    &quot;excuse&quot;     &quot;exercise&quot;   &quot;expense&quot;    &quot;experience&quot;
+## [21] &quot;eye&quot;        &quot;dog&quot;        &quot;health&quot;     &quot;high&quot;       &quot;knock&quot;     
+## [26] &quot;deal&quot;       &quot;level&quot;      &quot;local&quot;      &quot;nation&quot;     &quot;on&quot;        
+## [31] &quot;non&quot;        &quot;no&quot;         &quot;rather&quot;     &quot;dear&quot;       &quot;refer&quot;     
+## [36] &quot;remember&quot;   &quot;serious&quot;    &quot;stairs&quot;     &quot;test&quot;       &quot;tonight&quot;   
+## [41] &quot;transport&quot;  &quot;treat&quot;      &quot;trust&quot;      &quot;window&quot;     &quot;yesterday&quot;</code></pre>
+<pre class="r"><code>#Alternative
+swapped2 &lt;- str_replace_all(words, &quot;^([[:alpha:]])(.*)([[:alpha:]])$&quot;, &quot;\\3\\2\\1&quot;)
+intersect(swapped2, words)</code></pre>
+<pre><code>##  [1] &quot;a&quot;          &quot;america&quot;    &quot;area&quot;       &quot;dad&quot;        &quot;dead&quot;      
+##  [6] &quot;lead&quot;       &quot;read&quot;       &quot;depend&quot;     &quot;god&quot;        &quot;educate&quot;   
+## [11] &quot;else&quot;       &quot;encourage&quot;  &quot;engine&quot;     &quot;europe&quot;     &quot;evidence&quot;  
+## [16] &quot;example&quot;    &quot;excuse&quot;     &quot;exercise&quot;   &quot;expense&quot;    &quot;experience&quot;
+## [21] &quot;eye&quot;        &quot;dog&quot;        &quot;health&quot;     &quot;high&quot;       &quot;knock&quot;     
+## [26] &quot;deal&quot;       &quot;level&quot;      &quot;local&quot;      &quot;nation&quot;     &quot;on&quot;        
+## [31] &quot;non&quot;        &quot;no&quot;         &quot;rather&quot;     &quot;dear&quot;       &quot;refer&quot;     
+## [36] &quot;remember&quot;   &quot;serious&quot;    &quot;stairs&quot;     &quot;test&quot;       &quot;tonight&quot;   
+## [41] &quot;transport&quot;  &quot;treat&quot;      &quot;trust&quot;      &quot;window&quot;     &quot;yesterday&quot;</code></pre>
+</div>
+</div>
+<div id="splitting" class="section level3">
+<h3>14.4.5 Splitting</h3>
+<p>Use str_split() to split a string up into pieces. For example, we could split sentences into words:</p>
+<pre class="r"><code>sentences %&gt;%
+  head(5) %&gt;% 
+  str_split(&quot; &quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;The&quot;     &quot;birch&quot;   &quot;canoe&quot;   &quot;slid&quot;    &quot;on&quot;      &quot;the&quot;     &quot;smooth&quot; 
+## [8] &quot;planks.&quot;
+## 
+## [[2]]
+## [1] &quot;Glue&quot;        &quot;the&quot;         &quot;sheet&quot;       &quot;to&quot;          &quot;the&quot;        
+## [6] &quot;dark&quot;        &quot;blue&quot;        &quot;background.&quot;
+## 
+## [[3]]
+## [1] &quot;It&#39;s&quot;  &quot;easy&quot;  &quot;to&quot;    &quot;tell&quot;  &quot;the&quot;   &quot;depth&quot; &quot;of&quot;    &quot;a&quot;     &quot;well.&quot;
+## 
+## [[4]]
+## [1] &quot;These&quot;   &quot;days&quot;    &quot;a&quot;       &quot;chicken&quot; &quot;leg&quot;     &quot;is&quot;      &quot;a&quot;      
+## [8] &quot;rare&quot;    &quot;dish.&quot;  
+## 
+## [[5]]
+## [1] &quot;Rice&quot;   &quot;is&quot;     &quot;often&quot;  &quot;served&quot; &quot;in&quot;     &quot;round&quot;  &quot;bowls.&quot;</code></pre>
+<p>Because each component might contain a different number of pieces, this returns a list. If you’re working with a length-1 vector, the easiest thing is to just extract the first element of the list:</p>
+<pre class="r"><code>&quot;a|b|c|d&quot; %&gt;% 
+  str_split(&quot;\\|&quot;) %&gt;% 
+  .[[1]]</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</code></pre>
+<p>Otherwise, like the other stringr functions that return a list, you can use simplify = TRUE to return a matrix:</p>
+<pre class="r"><code>sentences %&gt;%
+  head(5) %&gt;% 
+  str_split(&quot; &quot;, simplify = TRUE)</code></pre>
+<pre><code>##      [,1]    [,2]    [,3]    [,4]      [,5]  [,6]    [,7]     [,8]         
+## [1,] &quot;The&quot;   &quot;birch&quot; &quot;canoe&quot; &quot;slid&quot;    &quot;on&quot;  &quot;the&quot;   &quot;smooth&quot; &quot;planks.&quot;    
+## [2,] &quot;Glue&quot;  &quot;the&quot;   &quot;sheet&quot; &quot;to&quot;      &quot;the&quot; &quot;dark&quot;  &quot;blue&quot;   &quot;background.&quot;
+## [3,] &quot;It&#39;s&quot;  &quot;easy&quot;  &quot;to&quot;    &quot;tell&quot;    &quot;the&quot; &quot;depth&quot; &quot;of&quot;     &quot;a&quot;          
+## [4,] &quot;These&quot; &quot;days&quot;  &quot;a&quot;     &quot;chicken&quot; &quot;leg&quot; &quot;is&quot;    &quot;a&quot;      &quot;rare&quot;       
+## [5,] &quot;Rice&quot;  &quot;is&quot;    &quot;often&quot; &quot;served&quot;  &quot;in&quot;  &quot;round&quot; &quot;bowls.&quot; &quot;&quot;           
+##      [,9]   
+## [1,] &quot;&quot;     
+## [2,] &quot;&quot;     
+## [3,] &quot;well.&quot;
+## [4,] &quot;dish.&quot;
+## [5,] &quot;&quot;</code></pre>
+<p>You can also request a maximum number of pieces:</p>
+<pre class="r"><code>fields &lt;- c(&quot;Name: Hadley&quot;, &quot;Country: NZ&quot;, &quot;Age: 35&quot;)
+fields %&gt;% str_split(&quot;: &quot;, n = 2, simplify = TRUE)</code></pre>
+<pre><code>##      [,1]      [,2]    
+## [1,] &quot;Name&quot;    &quot;Hadley&quot;
+## [2,] &quot;Country&quot; &quot;NZ&quot;    
+## [3,] &quot;Age&quot;     &quot;35&quot;</code></pre>
+<p>Instead of splitting up strings by patterns, you can also split up by character, line, sentence and word boundary()s:</p>
+<pre class="r"><code>x &lt;- &quot;This is a sentence.  This is another sentence.&quot;
+str_view_all(x, boundary(&quot;word&quot;))</code></pre>
+<div id="htmlwidget-121eedf800da9810e5ba" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-121eedf800da9810e5ba">{"x":{"html":"<ul>\n  <li><span class='match'>This<\/span> <span class='match'>is<\/span> <span class='match'>a<\/span> <span class='match'>sentence<\/span>.  <span class='match'>This<\/span> <span class='match'>is<\/span> <span class='match'>another<\/span> <span class='match'>sentence<\/span>.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_split(x, &quot; &quot;)[[1]]</code></pre>
+<pre><code>## [1] &quot;This&quot;      &quot;is&quot;        &quot;a&quot;         &quot;sentence.&quot; &quot;&quot;          &quot;This&quot;     
+## [7] &quot;is&quot;        &quot;another&quot;   &quot;sentence.&quot;</code></pre>
+<pre class="r"><code>str_split(x, boundary(&quot;word&quot;))[[1]]</code></pre>
+<pre><code>## [1] &quot;This&quot;     &quot;is&quot;       &quot;a&quot;        &quot;sentence&quot; &quot;This&quot;     &quot;is&quot;       &quot;another&quot; 
+## [8] &quot;sentence&quot;</code></pre>
+<div id="exercises-9" class="section level4">
+<h4>14.4.5.1 Exercises</h4>
+<ol style="list-style-type: decimal">
+<li>Split up a string like “apples, pears, and bananas” into individual components.</li>
+</ol>
+<pre class="r"><code>x &lt;- c(&quot;apples, pears, and bananas&quot;)
+str_split(x, &quot;, +(and +)?&quot;)[[1]]</code></pre>
+<pre><code>## [1] &quot;apples&quot;  &quot;pears&quot;   &quot;bananas&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Why is it better to split up by boundary(“word”) than &quot; &quot;?</li>
+</ol>
+<pre class="r"><code>sentence &lt;- &quot;The quick (“brown”) fox can’t jump 32.3 feet, right?&quot;
+str_split(sentence, &quot; &quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;The&quot;       &quot;quick&quot;     &quot;(“brown”)&quot; &quot;fox&quot;       &quot;can’t&quot;     &quot;jump&quot;     
+## [7] &quot;32.3&quot;      &quot;feet,&quot;     &quot;right?&quot;</code></pre>
+<pre class="r"><code>str_split(sentence, boundary(&quot;word&quot;))</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;The&quot;   &quot;quick&quot; &quot;brown&quot; &quot;fox&quot;   &quot;can’t&quot; &quot;jump&quot;  &quot;32.3&quot;  &quot;feet&quot;  &quot;right&quot;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>What does splitting with an empty string (&quot;&quot;) do? Experiment, and then read the documentation.</li>
+</ol>
+<p>Split for each charactor</p>
+</div>
+</div>
+<div id="stringi" class="section level3">
+<h3>14.7 stringi</h3>
+<p>stringr is built on top of the stringi package. stringr is useful when you’re learning because it exposes a minimal set of functions, which have been carefully picked to handle the most common string manipulation functions. stringi, on the other hand, is designed to be comprehensive. It contains almost every function you might ever need: stringi has 250 functions to stringr’s 49.</p>
+<p>If you find yourself struggling to do something in stringr, it’s worth taking a look at stringi. The packages work very similarly, so you should be able to translate your stringr knowledge in a natural way. The main difference is the prefix: str_ vs. stri_.</p>
 </div>
 </div>
 
