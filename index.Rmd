@@ -39,6 +39,13 @@ Author: "Billy (Peng) Zhou"
 
 [Lab7 RNA-Seq workflow: gene-level exploratory analysis and differential expression](Lab7.html)
 
+[Lab 8: Sequence Alignment, Phylogenetic Analysis and Tree Visualization](Lab8.html)
+
+[Lab 9A : Programming in R - Regular Expressions](Lab9A.html)
+
+[Lab 9B : Programming in R - Control Structures and Functions
+](Lab9B.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
