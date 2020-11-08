@@ -43,8 +43,9 @@ Author: "Billy (Peng) Zhou"
 
 [Lab 9A : Programming in R - Regular Expressions](Lab9A.html)
 
-[Lab 9B : Programming in R - Control Structures and Functions
-](Lab9B.html)
+[Lab 9B : Programming in R - Control Structures and Functions](Lab9B.html)
+
+[Lab 10: Population genomics based on high throughput sequencing (HTS)](Lab10.html)
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
