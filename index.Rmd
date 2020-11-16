@@ -47,6 +47,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab10: Population genomics based on high throughput sequencing (HTS)](Lab10.html)
 
+[Lab 11: Microbiome Analysis using dada2 and phyloseq](Lab11.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
