@@ -51,6 +51,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab 12: Network Analysis using Cytoscape and RCy3](Lab12.html)
 
+[Lab 13 : Sprucing up your Rmarkdown and GitHub Page](Lab13.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
