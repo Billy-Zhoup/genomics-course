@@ -47,11 +47,11 @@ Author: "Billy (Peng) Zhou"
 
 [Lab10: Population genomics based on high throughput sequencing (HTS)](Lab10.html)
 
-[Lab 11: Microbiome Analysis using dada2 and phyloseq](Lab11.html)
+[Lab11: Microbiome Analysis using dada2 and phyloseq](Lab11.html)
 
-[Lab 12: Network Analysis using Cytoscape and RCy3](Lab12.html)
+[Lab12: Network Analysis using Cytoscape and RCy3](Lab12.html)
 
-[Lab 13 : Sprucing up your Rmarkdown and GitHub Page](Lab13.html)
+[Lab13 : Sprucing up your Rmarkdown and GitHub Page](Lab13.html)
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
