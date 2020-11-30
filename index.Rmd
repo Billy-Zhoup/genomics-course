@@ -49,6 +49,8 @@ Author: "Billy (Peng) Zhou"
 
 [Lab 11: Microbiome Analysis using dada2 and phyloseq](Lab11.html)
 
+[Lab 12: Network Analysis using Cytoscape and RCy3](Lab12.html)
+
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCE
